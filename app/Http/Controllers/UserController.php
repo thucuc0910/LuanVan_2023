@@ -58,7 +58,7 @@ class UserController extends Controller
         $user = Admin::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('admin.users.index')
+        return redirect('admin/users/index')
                         ->with('success','User created successfully');
     }
     
@@ -118,7 +118,7 @@ class UserController extends Controller
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('admin.users.index')
+        return redirect('admin/users/index')
                         ->with('success','User updated successfully');
     }
     

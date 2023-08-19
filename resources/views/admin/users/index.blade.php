@@ -37,7 +37,7 @@
             </div>
             <div class="pull-right">
                 @can('role-create')
-                    <a class="btn btn-success" href="/admin/users/create"> Create New User</a>
+                    <a class="btn btn-primary" href="/admin/users/create"> Create New User</a>
 
                     {{-- <a href="#border-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse"
                         role="button"><i class="fa fa-code"></i>Create New User</a> --}}

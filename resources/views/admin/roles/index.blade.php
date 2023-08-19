@@ -60,13 +60,13 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $role->name }}</td>
                         <td>
-                            <a class="btn btn-success" style="color: white" href="/admin/roles/show, $role->id) }}">Show
+                            <a class="btn btn-success" style="color: white" href="/admin/roles/show/{{$role->id}}">Show
                             </a>
                             @can('role-edit')
-                                <a class="btn btn-warning" style="color: white" href="/admin/roles/edit, $role->id) }}">Edit</a>
+                                <a class="btn btn-warning" style="color: white" href="/admin/roles/edit/{{$role->id}}">Edit</a>
                             @endcan
                             @can('role-delete')
-                                {!! Form::open(['method' => 'DELETE', 'href' => '/admin/roles/destroy', $role->id, 'style' => 'display:inline']) !!}
+                                {!! Form::open(['method' => 'DELETE', 'href' => '/admin/roles/destroy/{{$role->id}}', 'style' => 'display:inline']) !!}
                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             @endcan

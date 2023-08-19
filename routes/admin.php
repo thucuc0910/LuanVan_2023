@@ -19,10 +19,8 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-
-
-
 Auth::routes();
+
 Route::prefix('/admin')->name('admin.')->group(function () {
 
     Route::middleware(['guest:admin', 'PreventBackHistory'])->group(function () {
@@ -33,6 +31,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::post('/send_password_reset_link', [AdminController::class, 'sendPasswordResetLink'])->name('send_password_reset_link');
         Route::get('/password/reset/{token}', [AdminController::class, 'resetPassword'])->name('reset_password');
         Route::post('/password_reset_handler', [AdminController::class, 'resetPasswordHandler'])->name('password_reset_handler');
+        
     });
 
     Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
@@ -46,9 +45,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('/roles')->name('roles.')->group(function () {
             Route::get('/index', [RoleController::class, 'index']);
             Route::get('/create', [RoleController::class, 'create']);
-            Route::post('/store', [RoleController::class, 'store']);
+            Route::post('/create', [RoleController::class, 'store']);
             Route::get('/edit/{id}', [RoleController::class, 'edit']);
-            Route::patch('/edit/{id}', [RoleController::class, 'update']);
+            Route::post('/edit/{id}', [RoleController::class, 'update']);
             Route::get('/show/{id}', [RoleController::class, 'show']);
             Route::post('/destroy', [RoleController::class, 'store']);
         });
@@ -76,8 +75,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
     });
 });
-
-
 
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
