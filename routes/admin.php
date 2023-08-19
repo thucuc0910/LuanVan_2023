@@ -36,7 +36,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'PreventBackHistory'])->group(function () {
 
-
         Route::view('/home', 'admin.Backend.page.admin.home')->name('home');
         Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
         Route::get('/profile', [AdminController::class, 'profileView'])->name('profile');
@@ -75,7 +74,6 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
     });
 });
-
 
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
 
