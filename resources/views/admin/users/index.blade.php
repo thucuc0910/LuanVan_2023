@@ -37,7 +37,7 @@
             </div>
             <div class="pull-right">
                 @can('role-create')
-                    <a class="btn btn-primary" href="/admin/users/create"> Create New User</a>
+                    <a class="btn btn-primary" href="{{ route('admin.users.create') }}"> Create New User</a>
 
                     {{-- <a href="#border-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse"
                         role="button"><i class="fa fa-code"></i>Create New User</a> --}}
@@ -69,9 +69,20 @@
                             @endif
                         </td>
                         <td>
-                            <a class="btn btn-success" style="color: white" href="/admin/users/show/{{$user->id}}">Show</a>
-                            <a class="btn btn-warning" style="color: white" href="/admin/users/edit/{{$user->id}}">Edit</a>
-                            {!! Form::open(['method' => 'DELETE', 'href' => '/admin/users/destroy', $user->id, 'style' => 'display:inline']) !!}
+                            @can('users-list')
+                            @endcan
+                            @can('users-edit')
+                            @endcan
+                            @can('users-delete')
+                            @endcan
+                            <a class="btn btn-success" href="{{ route('admin.users.show', $user->id) }}">Show</a>
+                            <a class="btn btn-warning" href="{{ route('admin.users.edit', $user->id) }}">Edit</a>
+                            {!! Form::open([
+                                'onclick' => "return confirm('Are you sure?')",
+                                'method' => 'DELETE',
+                                'route' => ['admin.users.destroy', $user->id],
+                                'style' => 'display:inline',
+                            ]) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         </td>
@@ -80,31 +91,5 @@
             </tbody>
         </table>
         {!! $data->render() !!}
-
-
-        <div class="collapse collapse-box" id="border-table">
-            <div class="code-box">
-                <div class="clearfix">
-                    <a href="javascript:;" class="btn btn-primary btn-sm code-copy pull-left"
-                        data-clipboard-target="#border-table-code"><i class="fa fa-clipboard"></i> Copy Code</a>
-                    <a href="#border-table" class="btn btn-primary btn-sm pull-right" rel="content-y" data-toggle="collapse"
-                        role="button"><i class="fa fa-eye-slash"></i> Hide Code</a>
-                </div>
-                <pre><code class="xml copy-pre hljs" id="border-table-code">
-<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"table table-bordered"</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"col"</span>&gt;</span>#<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"row"</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
-            </code></pre>
-            </div>
-        </div>
     </div>
 @endsection

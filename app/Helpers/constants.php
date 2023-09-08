@@ -3,7 +3,8 @@
 class constGuards
 {
     const ADMIN = 'admin';
-    // const STAFF = 'staff';
+    const USER = 'user';
+
 }
 
 class constDefaults

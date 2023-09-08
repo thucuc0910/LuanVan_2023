@@ -9,15 +9,21 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $table = 'categories';
+
     protected $fillable = [
         'name',
+        'slug',
         'description',
-        'content',
-        'active'
+        'image',
+        'meta_title',
+        'meta_keyword',
+        'meta_description',
+        'status'
     ];
 
-    // public function products()
-    // {
-    //     // return $this->hasMany(Product::class, 'menu_id', 'id');
-    // }
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 }

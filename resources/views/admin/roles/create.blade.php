@@ -24,7 +24,7 @@
             </div>
         @endif
 
-        {!! Form::open(['href' => '/admin/roles/store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::model($role, ['method' => 'PATCH','route' => ['admin.roles.update', $role->id]]) !!}
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">

@@ -13,14 +13,23 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->string('thumb');
-            $table->text('description')->nullable();
-            $table->longText('content')->nullable();
-            // $table->unsignedBigInteger('menu_id');
-            $table->integer('price')->nullable();
-            $table->integer('price_sale')->nullable();
-            $table->integer('active');
+            $table->string('slug');
+            $table->mediumText('small_description')->nullable();
+            $table->longText('description')->nullable();
+
+            $table->integer('original_price')->nullable();
+            $table->integer('selling_price')->nullable();
+            $table->integer('quantity');
+            $table->tinyInteger('trending')->default('0')->comment('1=trending,0=not-trending');
+            $table->tinyInteger('status')->default('0')->comment('0=visible,1=hidden');
+
+            $table->string('meta_title');
+            $table->mediumText('meta_keyword');
+            $table->mediumText('meta_description');
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -57,6 +57,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins'
         ],
+        'user' =>[
+            'driver' => 'session',
+            'provider' => 'users'
+        ],
         // 'staff' =>[
         //     'driver' => 'session',
         //     'provider' => 'staffs'

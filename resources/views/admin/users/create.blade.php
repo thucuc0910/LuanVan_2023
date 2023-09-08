@@ -27,7 +27,7 @@
 
 
 
-    {!! Form::open(['href' => '/admin/users/store', 'method' => 'POST']) !!}
+    {!! Form::open(array('route' => 'admin.users.store','method'=>'POST')) !!}
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_','-', app()->getLocale())}}">
 
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('pageTitle')</title>
 
     <!-- Site favicon -->
@@ -24,8 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> --}}
     <!-- Google Tag Manager -->
     <script>
         (function(w, d, s, l, i) {
@@ -313,7 +312,7 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
                     {{-- Sidebar 1 --}}
-                    @if (Route::is('admin.*'))
+                    {{-- @if (Route::is('admin.*')) --}}
                         <li>
                             <a href="{{ route('admin.home') }}"
                                 class="dropdown-toggle no-arrow {{ Route::is('admin.home') ? 'active' : '' }}">
@@ -325,17 +324,81 @@
                                 <span class="micon bi bi-graph-up"></span><span class="mtext">Dashboard</span>
                             </a>
                         </li>
-                    @else
-                    @endif
+                    {{-- @else --}}
+                    {{-- @endif --}}
+
+                    {{-- Sidebar 2 --}}
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
-                    {{-- Sidebar 2 --}}
                     <li>
-                        <a href="" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-menu-up"></span><span class="mtext">Quản lý danh mục</span>
+                        <a href="{{ route('admin.roles.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.roles.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-person-check-fill"></span><span class="mtext">Quản lý
+                                quyền</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('admin.users.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.users.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-people-fill"></span><span class="mtext">Quản lý account</span>
+                        </a>
+                    </li>
+                    {{-- Sidebar 3 --}}
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.sliders.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.sliders.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-file-earmark-slides"></span><span class="mtext">Sliders</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.coupons.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.coupons.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-qr-code-scan"></span><span class="mtext">Mã voucher</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.providers.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.providers.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-truck"></span><span class="mtext">Nhà cung cấp</span>
+                        </a>
+                    </li>
+
+
+                    {{-- Sidebar 4 --}}
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.categories.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.categories.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-menu-button-wide-fill"></span><span class="mtext">Danh mục</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.products.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.products.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-archive-fill"></span><span class="mtext">Sản phẩm</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.colors.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.colors.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-droplet-half"></span><span class="mtext">Colors</span>
+                        </a>
+                    </li>
+
+
+                    
 
                     {{-- <li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle">
@@ -663,11 +726,15 @@
     <script src="/extra_assets/ijabo/ijabo.min.css"></script>
     <script src="/extra_assets/ijabo/jquery.ijaboViewer.min.js"></script>
     <script src="/extra_assets/ijaboCropTool/ijaboCropTool.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-        crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
-    </script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
+    </script>
+    @yield('script')
+
     @livewireScripts
     @stack('scripts')
 </body>

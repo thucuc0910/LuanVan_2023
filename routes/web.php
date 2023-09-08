@@ -13,9 +13,16 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-route::view('/example_page', 'example_page');
-route::view('/auth_page', 'auth_page');
+// route::view('/example_page', 'example_page');
+// route::view('/auth_page', 'auth_page');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('/user')->name('user.')->group(function () {
+
+    Route::middleware(['guest:user'])->group(function () {
+
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+        
+    });
+});
