@@ -21,13 +21,13 @@ return new class extends Migration
 
             $table->integer('original_price')->nullable();
             $table->integer('selling_price')->nullable();
-            $table->integer('quantity');
+            // $table->integer('quantity');
             $table->tinyInteger('trending')->default('0')->comment('1=trending,0=not-trending');
             $table->tinyInteger('status')->default('0')->comment('0=visible,1=hidden');
 
-            $table->string('meta_title');
-            $table->mediumText('meta_keyword');
-            $table->mediumText('meta_description');
+            $table->string('meta_title')->nullable();
+            $table->mediumText('meta_keyword')->nullable();
+            $table->mediumText('meta_description')->nullable();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

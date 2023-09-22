@@ -359,16 +359,11 @@
                     <li>
                         <a href="{{ route('admin.coupons.index') }}"
                             class="dropdown-toggle no-arrow {{ Route::is('admin.coupons.*') ? 'active' : '' }}">
-                            <span class="micon bi bi-qr-code-scan"></span><span class="mtext">Mã voucher</span>
+                            <span class="micon bi bi-qr-code-scan"></span><span class="mtext">Voucher</span>
                         </a>
                     </li>
 
-                    <li>
-                        <a href="{{ route('admin.providers.index') }}"
-                            class="dropdown-toggle no-arrow {{ Route::is('admin.providers.*') ? 'active' : '' }}">
-                            <span class="micon bi bi-truck"></span><span class="mtext">Nhà cung cấp</span>
-                        </a>
-                    </li>
+                    
 
 
                     {{-- Sidebar 4 --}}
@@ -393,9 +388,48 @@
                     <li>
                         <a href="{{ route('admin.colors.index') }}"
                             class="dropdown-toggle no-arrow {{ Route::is('admin.colors.*') ? 'active' : '' }}">
-                            <span class="micon bi bi-droplet-half"></span><span class="mtext">Colors</span>
+                            <span class="micon bi bi-droplet-half"></span><span class="mtext">Màu sắc</span>
                         </a>
                     </li>
+
+
+                    {{-- Sidebar 5 --}}
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.providers.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.providers.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-truck"></span><span class="mtext">Nhà cung cấp</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.orders.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-boxes"></span><span class="mtext">Kho</span>
+                            {{-- <i class="icon-copy bi bi-cart4"></i> --}}
+                        </a>
+                    </li>
+                    
+
+                    {{-- Sidebar 6 --}}
+
+                    {{-- <i class="icon-copy bi bi-clipboard2-data-fill"></i> --}}
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.orders.*') ? 'active' : '' }}">
+                            <span class="micon bi bi-cart4"></span><span class="mtext">Đơn hàng</span>
+                            {{-- <i class="icon-copy bi bi-cart4"></i> --}}
+                        </a>
+                    </li>
+
+
 
 
                     

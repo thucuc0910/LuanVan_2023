@@ -68,7 +68,7 @@ class ProductController extends Controller
             'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
-            'quantity' => 'required|integer',
+            // 'quantity' => 'required|integer',
             'meta_title' => 'required|max:255',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
@@ -86,7 +86,7 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->original_price = $request->input('original_price');
         $product->selling_price = $request->input('selling_price');
-        $product->quantity = $request->input('quantity');
+        // $product->quantity = $request->input('quantity');
         $product->trending = $request->input('trending') == true ? '1' : '0';
         $product->status = $request->input('status') == true ? '1' : '0';
         $product->meta_title = $request->input('meta_title');
@@ -167,7 +167,7 @@ class ProductController extends Controller
             'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
-            'quantity' => 'required|integer',
+            // 'quantity' => 'required|integer',
             'meta_title' => 'required|max:255',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
@@ -214,7 +214,6 @@ class ProductController extends Controller
                     $product->productColors()->create([
                         'product_id' => $product->id,
                         'color_id' => $color,
-
                         'quantity' => $request->colorQuantity[$key] ?? 0,
                     ]);
                 }

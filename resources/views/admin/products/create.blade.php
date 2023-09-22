@@ -155,14 +155,14 @@
                 <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
                     aria-labelledby="details-tab" tabindex="0">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <strong>Original Price</strong>
                                 <input type="number" name="original_price" class="form-control">
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <strong>Selling Price</strong>
                                 <input type="number" name="selling_price" class="form-control">
@@ -170,12 +170,12 @@
                         </div>
 
 
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        {{-- <div class="col-xs-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <strong>Quantity</strong><br />
                                 <input type="number" name="quantity" class="form-control">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="row">

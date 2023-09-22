@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\CheckoutPaymentController;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -14,9 +15,14 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProviderController;
+use App\Http\Controllers\Admin\OrderAdminController;
 
 // Controller User
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\WishLisController;
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,20 +37,48 @@ use App\Http\Controllers\User\HomeController;
 
 Auth::routes();
 
+// USER ROUTE
 Route::prefix('/user')->name('user.')->group(function () {
 
     Route::middleware(['guest:user'])->group(function () {
 
-        $sliders = Slider::where('status','1')->get();
-        Route::get('/home', [HomeController::class, 'home']);
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('/login', [HomeController::class, 'login'])->name('login');
+        Route::post('/login_handler', [HomeController::class, 'loginHandler']);
+
+        Route::prefix('/categories')->name('categories.')->group(function () {
+            Route::get('/{category_id}', [HomeController::class, 'products']);
+            Route::get('/productAll', [HomeController::class, 'productAll']);
+            Route::get('/{category_id}/{product_id}', [HomeController::class, 'productDetail']);
+        });
     });
 
-    Route::middleware(['auth:user', 'PreventBackHistory'])->group(function () {
+    Route::middleware(['auth:user'])->group(function () {
 
-        
+        Route::get('/homeAuth', [HomeController::class, 'index'])->name('home');
+        Route::post('/logout', [HomeController::class, 'logout']);
+        Route::get('/wishlist', [WishLisController::class, 'wishList'])->name('wishlist');
+        Route::get('/cart', [CartController::class, 'index'])->name('index');
+        Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
+        Route::prefix('/categoriesAuth')->name('categories.')->group(function () {
+            Route::get('/{category_id}', [HomeController::class, 'products']);
+            Route::get('/productAll', [HomeController::class, 'productAll']);
+            Route::get('/{category_id}/{product_id}', [HomeController::class, 'productDetail']);
+        });
+
+        // Payment online
+        Route::post('/online_checkout', [CheckoutPaymentController::class, 'online_checkout']);
+        // Route::post('/momo_payment', [CheckoutPaymentController::class, 'momo_payment']);
+        Route::get('thank-you', [HomeController::class, 'thankyou']);
+
+        Route::get('orders', [OrderController::class, 'index']);
+        Route::get('/orders/{order_id}', [OrderController::class, 'show']);
+
     });
 });
 
+// ADMIN ROUTE
 Route::prefix('/admin')->name('admin.')->group(function () {
 
     Route::middleware(['guest:admin', 'PreventBackHistory'])->group(function () {
@@ -74,6 +108,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
+        Route::resource('orders', OrderAdminController::class);
+        Route::get('invoice/{orderId}', [OrderAdminController::class, 'viewPDF']);
+        Route::get('invoice/{orderId}/generate', [OrderAdminController::class, 'PDF']);
         Route::get('/products/{product_image_id}/deleteImage', [ProductController::class, 'deleteImage']);
         Route::post('products/product_color/{id}', [ProductController::class, 'updateProdColorQty']);
         Route::get('/products/product_color/delete/{id}', [ProductController::class, 'deleteProdColorQty']);

@@ -91,11 +91,11 @@
                                         colspan="1" aria-label="Address: activate to sort column ascending">
                                         Price
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
+                                    {{-- <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Start Date: activate to sort column ascending"
                                         style="">
                                         Quantity
-                                    </th>
+                                    </th> --}}
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Salart: activate to sort column ascending"
                                         style="">

@@ -19,7 +19,7 @@ class Product extends Model
         'description',
         'original_price',
         'selling_price',
-        'quantity',
+        // 'quantity',
         'trending',
         'meta_title',
         'meta_keyword',
@@ -39,10 +39,4 @@ class Product extends Model
     {
         return $this->hasMany(ProductColor::class, 'product_id', 'id');
     }
-
-    // public function orders_detail()
-    // {
-    //     return $this->hasMany(Menu::class, 'id', 'product_id')
-    //         ->withDefault(['name' => '']);
-    // }
 }
