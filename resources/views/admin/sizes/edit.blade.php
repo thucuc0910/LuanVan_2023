@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>Add Color</h2>
+                    <h2>Cập nhật size</h2>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.colors.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('admin.sizes.index') }}"> Back</a>
                 </div>
             </div>
         </div>
@@ -26,13 +26,15 @@
         @endif
 
         <div class="card-body">
-            <form action="{{ route('admin.colors.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.sizes.update', $size->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
+
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Name</strong>
-                            <input type="text"  name="name" class="form-control">
+                            <strong>Tên</strong>
+                            <input type="text" name="name" value="{{ $size->name }}" class="form-control">
                         </div>
                     </div>
                     @error('name')
@@ -41,8 +43,8 @@
 
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Code</strong>
-                            <input type="text" name="code" class="form-control">
+                            <strong>Mã</strong>
+                            <input type="text" name="code" value="{{ $size->code }}" class="form-control">
                         </div>
                     </div>
                     @error('slug')
@@ -51,9 +53,10 @@
 
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="mb-3 ">
-                            <strong>Status</strong><br />
+                            <strong>Tình trạng</strong><br />
                             <div class="pr-5">
-                                <input  type="checkbox" name="status" style="width:30px; height:30px">
+                                <input type="checkbox" name="status" {{ $size->status == '1' ? 'checked=""' : '' }}
+                                    style="width:30px; height:30px">
                             </div>
                             Checked=hidden, unchecked=Visible
                         </div>

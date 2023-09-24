@@ -11,11 +11,12 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\Admin\WareHouseController;
 
 // Controller User
 use App\Http\Controllers\User\HomeController;
@@ -74,7 +75,6 @@ Route::prefix('/user')->name('user.')->group(function () {
 
         Route::get('orders', [OrderController::class, 'index']);
         Route::get('/orders/{order_id}', [OrderController::class, 'show']);
-
     });
 });
 
@@ -114,11 +114,21 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/products/{product_image_id}/deleteImage', [ProductController::class, 'deleteImage']);
         Route::post('products/product_color/{id}', [ProductController::class, 'updateProdColorQty']);
         Route::get('/products/product_color/delete/{id}', [ProductController::class, 'deleteProdColorQty']);
-        Route::resource('colors', ColorController::class);
+        // Route::resource('colors', ColorController::class);
+        Route::resource('sizes', SizeController::class);
         Route::resource('sliders', SliderController::class);
         Route::resource('coupons', CouponController::class);
         Route::resource('providers', ProviderController::class);
         Route::post('providers/select_address', [ProviderController::class, 'select_address']);
         Route::post('providers/store', [ProviderController::class, 'store']);
+
+        Route::get('/warehouses/index', [WareHouseController::class, 'index'])->name('warehouses.index');
+        Route::get('/warehouses/create', [WareHouseController::class, 'create'])->name('warehouses.show');
+        Route::get('/addRowProduct', [WareHouseController::class, 'addRowProduct'])->name('addRowProduct');
+        Route::post('/create', [WareHouseController::class, 'store'])->name('warehouses.store');
+        Route::get('/edit/{id}', [WareHouseController::class, 'edit'])->name('warehouses.edit');
+        Route::post('/edit/{id}', [WareHouseController::class, 'update']);
+        // Route::get('/show/{id}', [WareHouseController::class, 'show']);
+        Route::post('/destroy', [WareHouseController::class, 'store'])->name('warehouses.destroy');
     });
 });

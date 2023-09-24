@@ -6,19 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderItem extends Model
+class ProductWareHouse extends Model
 {
     use HasFactory;
 
-    protected $table = 'order_items';
+    protected $table = 'product_ware_houses';
 
     protected $fillable = [
-        'order_id',
+        'ware_house_id',
         'product_id',
-        'product_size_id',
+        'size_id',
         'quantity',
-        'color',
-        'price',
     ];
 
     /**
@@ -31,8 +29,8 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function productColor(): BelongsTo
+    public function productSize(): BelongsTo
     {
-        return $this->belongsTo(ProductSize::class, 'product_size_id', 'id');
+        return $this->belongsTo(ProductColor::class, 'size_id', 'id');
     }
 }

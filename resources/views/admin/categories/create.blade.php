@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name</strong>
+                        <strong>Tên</strong>
                         <input type="text" name="name" class="form-control">
                     </div>
                 </div>
@@ -50,7 +50,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Description</strong>
+                        <strong>Miêu tả</strong>
                         <textarea class="form-control" style="height:150px" name="description" rows="3"></textarea>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Image</strong>
+                        <strong>Hình ảnh</strong>
                         <input type="file" name="image" class="form-control">
                     </div>
                 </div>
@@ -71,7 +71,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Status</strong><br />
+                        <strong>Tình trạng</strong><br />
                         <input type="checkbox" name="status" style="width: 30px; height: 30px">
                     </div>
                 </div>
@@ -81,7 +81,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Title</strong>
+                        <strong>Tiêu đề meta</strong>
                         <textarea type="text" name="meta_title" class="form-control"></textarea>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Keyword</strong>
+                        <strong>Từ khoá meta</strong>
                         <textarea type="text" name="meta_keyword" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Description</strong>
+                        <strong>Mô tả meta</strong>
                         <textarea type="text" name="meta_description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>

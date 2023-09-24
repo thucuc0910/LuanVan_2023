@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Products Management</h4>
+                        <h4>Quản lý sản phẩm</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -16,7 +16,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Products Management
+                                Sản phẩm
                             </li>
                         </ol>
                     </nav>
@@ -31,17 +31,20 @@
         @endif
 
         <div class="card-box mb-30">
-            <div class="row pd-20">
+            <div class="row pt-20 pr-20">
                 <div class="col-md-12 col-sm-12">
                     <div class="form-group">
                         <div class="float-right">
                             @can('role-create')
-                                <a class="btn btn-primary" href="{{ route('admin.products.create') }}"> Create New Product</a>
+                                <a class="btn btn-primary" href="{{ route('admin.products.create') }}"> Thêm sản phẩm</a>
                             @endcan
                         </div>
                     </div>
                 </div>
             </div>
+            <hr>
+
+
 
             <div class="pb-20">
                 <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -77,19 +80,19 @@
                                 <tr role="row">
                                     <th class="table-plus datatable-nosort sorting_asc" rowspan="1"
                                         colspan="1"aria-label="Name">
-                                        ID
+                                        No
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Age: activate to sort column ascending">
-                                        Name
+                                        Tên
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Office: activate to sort column ascending">
-                                        Category
+                                        Danh mục
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Address: activate to sort column ascending">
-                                        Price
+                                        Giá
                                     </th>
                                     {{-- <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Start Date: activate to sort column ascending"
@@ -99,17 +102,17 @@
                                     <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1"
                                         colspan="1" aria-label="Salart: activate to sort column ascending"
                                         style="">
-                                        Status
+                                        Tình trạng
                                     </th>
                                     <th>
-                                        Action
+                                        Tuỳ biên
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
                                     <tr role="row" class="odd">
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $i + 1 }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td>
                                             @if ($product->category)
@@ -119,8 +122,15 @@
                                             @endif
                                         </td>
                                         <td>{{ $product->original_price }}</td>
-                                        <td>{{ $product->quantity }}</td>
-                                        <td>{{ $product->status == 1 ? 'Hidden' : 'Visible' }}</td>
+                                        <td>
+                                            @if ($product->status == 1)
+                                                <i class="btn micon bi bi-eye-fill"
+                                                    style="color: white; background-color: rgb(59, 89, 152);"></i>
+                                            @else
+                                                <i class="btn micon bi bi-eye-slash-fill"
+                                                    style="color: white; background-color: rgb(59, 89, 152);"></i>
+                                            @endif
+                                        </td>
                                         <td>
                                             @can('category-list')
                                                 <a class="btn btn-success"
@@ -146,16 +156,15 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="p-50 padding-block-end">
+                        <div class=" padding-block-end">
                             <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate">
                                 <ul class="pagination">
                                     <li class="paginate_button page-item previous disabled"
                                         id="DataTables_Table_2_previous"><a href="#"
                                             aria-controls="DataTables_Table_2" data-dt-idx="0" tabindex="0"
                                             class="page-link"><i class="ion-chevron-left"></i></a></li>
-                                    <li class="paginate_button page-item active"><a href="#"
-                                            aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0"
-                                            class="page-link">1</a></li>
+                                    <li class=" page-item active"><a href="#" aria-controls="DataTables_Table_2"
+                                            data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
                                     <li class="paginate_button page-item "><a href="#"
                                             aria-controls="DataTables_Table_2" data-dt-idx="2" tabindex="0"
                                             class="page-link">2</a></li>

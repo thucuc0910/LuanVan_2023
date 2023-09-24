@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Categories Management</h4>
+                        <h4>Quản lý danh mục</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -15,7 +15,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Categories Management
+                                Danh mục
                             </li>
                         </ol>
                     </nav>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="pull-right">
                     @can('role-create')
-                        <a class="btn btn-primary" href="{{ route('admin.categories.create') }}"> Create New Category</a>
+                        <a class="btn btn-primary" href="{{ route('admin.categories.create') }}"> Thêm danh mục</a>
                     @endcan
 
                 </div>
@@ -42,9 +42,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th width="280px">Action</th>
+                        <th>Tên</th>
+                        <th>Tình trạng</th>
+                        <th width="280px">Tuỳ biến</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,15 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $category->name }}</td>
-                            <td>{{ $category->status == 1 ? 'Hidden' : 'Visible' }}</td>
+                            <td>
+                                @if ($category->status == 1)
+                                    <i class="btn micon bi bi-eye-fill"
+                                        style="color: white; background-color: rgb(59, 89, 152);"></i>
+                                @else
+                                    <i class="btn micon bi bi-eye-slash-fill"
+                                        style="color: white; background-color: rgb(59, 89, 152);"></i>
+                                @endif
+                            </td>
                             <td>
                                 @can('category-list')
                                     <a class="btn btn-success"
@@ -60,7 +68,7 @@
                                 @endcan
 
                                 @can('category-edit')
-                                    <a class="btn btn-warning"
+                                    <a class="btn btn-warning" style="color: white"
                                         href="{{ route('admin.categories.edit', $category->id) }}">Edit</a>
                                 @endcan
                                 @can('category-delete')

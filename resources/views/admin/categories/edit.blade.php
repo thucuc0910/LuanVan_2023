@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
-                    <h2>Edit Category</h2>
+                    <h2>Cập nhật danh mục</h2>
                 </div>
                 <div class="pull-right">
                     <a class="btn btn-primary" href="{{ route('admin.categories.index') }}"> Back</a>
@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name</strong>
+                        <strong>Tên</strong>
                         <input type="text" name="name" value="{{ $category->name }}" class="form-control"
                             placeholder="Name">
                     </div>
@@ -52,7 +52,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Description</strong>
+                        <strong>Miêu tả</strong>
                         <textarea class="form-control" value="{{ $category->description }}" style="height:150px" name="description"
                             rows="3">{{ $category->description }}</textarea>
                     </div>
@@ -63,7 +63,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Image</strong>
+                        <strong>Hình ảnh</strong>
                         <input type="file" name="image" class="form-control">
                         <input type="hidden" name="image" value="{{ $category->image }}" id="image">
 
@@ -78,7 +78,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Status</strong><br />
+                        <strong>Tình trạng</strong><br />
                         <input type="checkbox" name="status" {{ $category->status == '1' ? 'checked=""' : '' }} style="width: 30px; height: 30px">
                     </div>
                 </div>
@@ -88,7 +88,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Title</strong>
+                        <strong>Tiêu đề meta</strong>
                         <textarea type="text" value="" name="meta_title" class="form-control">{{ $category->meta_title }}</textarea>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Keyword</strong>
+                        <strong>Từ khoá meta</strong>
                         <textarea type="text" value="" name="meta_keyword" class="form-control" rows="3">{{ $category->meta_keyword }}</textarea>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Description</strong>
+                        <strong>Miêu tả meta</strong>
                         <textarea type="text" value="" name="meta_description" class="form-control" rows="3">{{ $category->meta_description }}</textarea>
                     </div>
                 </div>
