@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('provider_district');
             $table->string('provider_ward');
             $table->string('provider_street');
-            $table->tinyInteger('status')->default('0')->comment('1=hidden,0=visible');
+            $table->tinyInteger('status')->default('1')->comment('1=visible,9=hidden');
             $table->timestamps();
         });
     }

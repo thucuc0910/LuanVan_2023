@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Coupons Management</h4>
+                        <h4>QUẢN LÝ MÃ GIẢM GIÁ</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -16,7 +16,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Coupons Management
+                                Quản lý mã giảm giá
                             </li>
                         </ol>
                     </nav>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="pull-right">
                     @can('role-create')
-                        <a class="btn btn-primary" href="{{ route('admin.coupons.create') }}"> Create New Coupon</a>
+                        <a class="btn btn-primary" href="{{ route('admin.coupons.create') }}">Thêm mã giảm giá</a>
                     @endcan
 
                 </div>
@@ -43,12 +43,12 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Coupon Code</th>
-                        <th>Amount</th>
+                        <th>Mã</th>
+                        <th>Giá trị</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày kết thúc</th>
-                        <th>Status</th>
-                        <th width="280px">Action</th>
+                        <th>Tình trạng</th>
+                        <th width="280px">Tuỳ biến</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,7 +74,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-success" href="{{ route('admin.coupons.show', $coupon->id) }}">Show</a>
+                                {{-- <a class="btn btn-success" href="{{ route('admin.coupons.show', $coupon->id) }}">Show</a> --}}
 
                                 <a class="btn btn-warning" href="{{ route('admin.coupons.edit', $coupon->id) }}">Edit</a>
                                 {!! Form::open([

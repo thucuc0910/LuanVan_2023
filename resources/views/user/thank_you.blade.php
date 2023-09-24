@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('user.layouts.app_layout')
 @section('title', 'Thank You for Shopping')
 @section('content')
     <div class="py-1 pt-50 mb-500" style="height: 340px">

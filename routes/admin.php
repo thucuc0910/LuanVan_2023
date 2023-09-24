@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\CommentAdminController;
+use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\User\CheckoutPaymentController;
 use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
@@ -11,17 +14,20 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\Admin\WareHouseController;
 
 // Controller User
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\WishLisController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\CommentController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\User\OrderController;
 
 /*
@@ -37,6 +43,10 @@ use App\Http\Controllers\User\OrderController;
 
 Auth::routes();
 
+Route::get('/home', function () {
+    return view('user.home');
+});
+
 // USER ROUTE
 Route::prefix('/user')->name('user.')->group(function () {
 
@@ -46,35 +56,60 @@ Route::prefix('/user')->name('user.')->group(function () {
         Route::get('/login', [HomeController::class, 'login'])->name('login');
         Route::post('/login_handler', [HomeController::class, 'loginHandler']);
 
+        Route::get('/auth/google/redirect', [SocialAuthController::class, 'googleRedirect'])->name('googleRedirect');
+        Route::get('/auth/google/callback', [SocialAuthController::class, 'googleCallback'])->name('googleCallback');
+
         Route::prefix('/categories')->name('categories.')->group(function () {
             Route::get('/{category_id}', [HomeController::class, 'products']);
-            Route::get('/productAll', [HomeController::class, 'productAll']);
             Route::get('/{category_id}/{product_id}', [HomeController::class, 'productDetail']);
         });
+
+        Route::get('/searchProductMicrophone', [HomeController::class, 'searchProductMicrophone']);
+
+        Route::get('/blog', function () {
+            return view('user.blog');
+        });
+
+        Route::post('/comment', [CommentController::class, 'store']);
     });
 
     Route::middleware(['auth:user'])->group(function () {
 
         Route::get('/homeAuth', [HomeController::class, 'index'])->name('home');
-        Route::post('/logout', [HomeController::class, 'logout']);
+        Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
         Route::get('/wishlist', [WishLisController::class, 'wishList'])->name('wishlist');
         Route::get('/cart', [CartController::class, 'index'])->name('index');
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
         Route::prefix('/categoriesAuth')->name('categories.')->group(function () {
             Route::get('/{category_id}', [HomeController::class, 'products']);
-            Route::get('/productAll', [HomeController::class, 'productAll']);
             Route::get('/{category_id}/{product_id}', [HomeController::class, 'productDetail']);
         });
-
+        Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
         // Payment online
         Route::post('/online_checkout', [CheckoutPaymentController::class, 'online_checkout']);
         // Route::post('/momo_payment', [CheckoutPaymentController::class, 'momo_payment']);
         Route::get('thank-you', [HomeController::class, 'thankyou']);
+        Route::get('/search', [HomeController::class, 'searchProduct']);
+        // Route::get('/search-form', [HomeController::class, 'searchMicrophone']);
+        Route::get('/searchProductMicrophoneAuth', [HomeController::class, 'searchProductMicrophone']);
+        Route::get('/profile', [HomeController::class, 'profile']);
+        Route::get('/profile/createAddress', [HomeController::class, 'createAddress']);
+        Route::post('/profile/addAddress', [HomeController::class, 'addAddress']);
+        Route::get('/profile/updateAddress/{address_id}', [HomeController::class, 'updateAddress']);
+        Route::post('/profile/editAddress/{address_id}', [HomeController::class, 'editAddress']);
+        Route::post('profile/select_address', [HomeController::class, 'select_address']);
+
+        Route::get('/profile/orderDetail/{order_id}', [HomeController::class, 'orderDetail']);
+        Route::get('/order/cancle/{order_id}', [HomeController::class, 'cancleOrder']);
+        Route::post('/changePassword', [HomeController::class, 'changePassword']);
+        // Route::get('/addAddress', [HomeController::class, 'addAddress']);
 
         Route::get('orders', [OrderController::class, 'index']);
         Route::get('/orders/{order_id}', [OrderController::class, 'show']);
 
+        Route::post('/commentAuth', [CommentController::class, 'store']);
+        Route::post('/commentAuth/reply', [CommentController::class, 'postReply'])->name('commentAuth.reply');
     });
 });
 
@@ -94,6 +129,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::view('/home', 'admin.Backend.page.admin.home')->name('home');
         Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
         Route::get('/profile', [AdminController::class, 'profileView'])->name('profile');
+        Route::get('/dashboard', [AdminController::class, 'dashBoard'])->name('dashboard');
         Route::post('/change_profile_picture', [AdminController::class, 'changeProfilePicture'])->name('change_profile_picture');
         Route::prefix('/roles')->name('roles.')->group(function () {
             Route::get('/index', [RoleController::class, 'index']);
@@ -106,6 +142,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);
+        Route::resource('accounts', AccountController::class);
+        Route::resource('comments', CommentAdminController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
         Route::resource('orders', OrderAdminController::class);
@@ -114,11 +152,28 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/products/{product_image_id}/deleteImage', [ProductController::class, 'deleteImage']);
         Route::post('products/product_color/{id}', [ProductController::class, 'updateProdColorQty']);
         Route::get('/products/product_color/delete/{id}', [ProductController::class, 'deleteProdColorQty']);
-        Route::resource('colors', ColorController::class);
+        // Route::resource('colors', ColorController::class);
+        Route::resource('sizes', SizeController::class);
         Route::resource('sliders', SliderController::class);
         Route::resource('coupons', CouponController::class);
         Route::resource('providers', ProviderController::class);
         Route::post('providers/select_address', [ProviderController::class, 'select_address']);
         Route::post('providers/store', [ProviderController::class, 'store']);
+
+        Route::get('/warehouses/index', [WareHouseController::class, 'index'])->name('warehouses.index');
+        Route::get('/warehouses/create', [WareHouseController::class, 'create'])->name('warehouses.show');
+        Route::post('/warehouses/product_add/{id}', [WareHouseController::class, 'addProductWarehouse'])->name('warehouses.addProductWarehouse');
+
+        Route::get('/addRowProduct', [WareHouseController::class, 'addRowProduct'])->name('addRowProduct');
+        Route::post('/create', [WareHouseController::class, 'store'])->name('warehouses.store');
+        Route::get('/edit/{id}', [WareHouseController::class, 'edit'])->name('warehouses.edit');
+        Route::post('/edit/{id}', [WareHouseController::class, 'update']);
+        // Route::get('/show/{id}', [WareHouseController::class, 'show']);
+        Route::post('/destroy', [WareHouseController::class, 'store'])->name('warehouses.destroy');
+
+        // Thong ke
+        Route::post('/days-order',[DashBoardController::class,'days_order']);
+        Route::post('/dashboard-filter',[DashBoardController::class,'dashboard_filter']);
+        Route::post('/filter-by-date',[DashBoardController::class,'filter_by_date']);
     });
 });

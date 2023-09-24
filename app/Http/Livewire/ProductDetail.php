@@ -4,13 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\ProductImage;
+use App\Models\ProductSize;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ProductDetail extends Component
 {
-    public $categories, $product, $productColorId, $prodColorSelectedQuantity, $quantityCount = 1;
+    public $categories, $product, $productSizeId, $prodSizeSelectedQuantity, $quantityCount = 1;
     public function addToWishList($productId)
     {
         if (Auth::check()) {
@@ -64,26 +65,24 @@ class ProductDetail extends Component
         }
     }
 
-    public function colorSelected($productColorId)
+    public function sizeSelected($productSizeId)
     {
         // dd('fvdfv');
         // dd($productColor);
-        $this->productColorId = $productColorId;
-        $productColor = $this->product->productColors()->where('id', $productColorId)->first();
-        $this->prodColorSelectedQuantity = $productColor->quantity;
-
-        if ($this->prodColorSelectedQuantity == 0) {
-            $this->prodColorSelectedQuantity = 'outOfStock';
-        }
+        $this->productSizeId = $productSizeId;
     }
 
     public function addToCart(int $productId)
     {
         if (Auth::check()) {
             if ($this->product->where('id', $productId)->where('status', '1')->exists()) {
-                if ($this->product->productColors()->count() > 1) {
-                    if ($this->prodColorSelectedQuantity != NULL) {
-                        $productColor = $this->product->productColors()->where('id', $this->productColorId)->first();
+
+                $productSize = ProductSize::where('product_id', $productId)->first();
+                if ($productSize->quantity > 1) {
+                // dd('scsdvdf');
+
+                    if ($this->productSizeId != NULL) {
+                        $productSize = $this->product->productSizes()->where('id', $this->productSizeId)->first();
                         if (Cart::where('user_id', auth()->user()->id)->where('product_id', $productId)->exists()) {
                             $this->dispatchBrowserEvent('message', [
                                 'text' => 'Sản phẩm đã được thêm vào.',
@@ -91,12 +90,12 @@ class ProductDetail extends Component
                                 'status' => 404
                             ]);
                         } else {
-                            if ($productColor->quantity > 0) {
-                                if ($productColor->quantity > $this->quantityCount) {
+                            if ($productSize->quantity > 0) {
+                                if ($productSize->quantity > $this->quantityCount) {
                                     Cart::create([
                                         'user_id' => auth()->user()->id,
                                         'product_id' => $productId,
-                                        'product_color_id' => $this->productColorId,
+                                        'product_size_id' => $this->productSizeId,
                                         'quantity' => $this->quantityCount,
                                     ]);
                                     $this->emit('CartAddedUpdated');
@@ -108,7 +107,7 @@ class ProductDetail extends Component
                                 } else {
 
                                     $this->dispatchBrowserEvent('message', [
-                                        'text' => 'Chỉ còn ' . $productColor->quantity . ' sản phẩm trong khả dụng.',
+                                        'text' => 'Chỉ còn ' . $productSize->quantity . ' sản phẩm khả dụng.',
                                         'type' => 'warning',
                                         'status' => 404
                                     ]);
@@ -123,47 +122,10 @@ class ProductDetail extends Component
                         }
                     } else {
                         $this->dispatchBrowserEvent('message', [
-                            'text' => 'Vui lòng chọn màu sản phẩm.',
+                            'text' => 'Vui lòng chọn size sản phẩm.',
                             'type' => 'warning',
                             'status' => 404
                         ]);
-                    }
-                } else {
-                    if (Cart::where('user_id', auth()->user()->id)->where('product_id', $productId)->exists()) {
-                        $this->dispatchBrowserEvent('message', [
-                            'text' => 'Sản phẩm đã được thêm vào.',
-                            'type' => 'warning',
-                            'status' => 404
-                        ]);
-                    } else {
-                        if ($this->product->quantity > 0) {
-                            if ($this->product->quantity > $this->quantityCount) {
-                                Cart::create([
-                                    'user_id' => auth()->user()->id,
-                                    'product_id' => $productId,
-                                    'product_color_id' => $this->productColorId,
-                                    'quantity' => $this->quantityCount,
-                                ]);
-                                $this->emit('CartAddedUpdated');
-                                $this->dispatchBrowserEvent('message', [
-                                    'text' => 'Sản phẩm được thêm vào giỏ hàng thành công.',
-                                    'type' => 'success',
-                                    'status' => 200
-                                ]);
-                            } else {
-                                $this->dispatchBrowserEvent('message', [
-                                    'text' => 'Chỉ còn' . $this->product->quantity . 'sản phẩm trong khả dụng.',
-                                    'type' => 'warning',
-                                    'status' => 404
-                                ]);
-                            }
-                        } else {
-                            $this->dispatchBrowserEvent('message', [
-                                'text' => 'Hết hàng.',
-                                'type' => 'warning',
-                                'status' => 404
-                            ]);
-                        }
                     }
                 }
             } else {
@@ -189,6 +151,7 @@ class ProductDetail extends Component
             'categories' => $this->categories,
             'product' => $this->product,
             'productImages' => $productImages,
+            'productSizeId' => $this->productSizeId
         ]);
     }
 }

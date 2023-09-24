@@ -49,9 +49,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::latest()->paginate(5);
-        $colors = Color::where('status', '1')->get();
+        // $colors = Color::where('status', '1')->get();
 
-        return view('admin.products.create', compact('categories', 'colors'));
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -65,13 +65,13 @@ class ProductController extends Controller
         request()->validate([
             'category_id' => 'required|integer',
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
             // 'quantity' => 'required|integer',
-            'meta_title' => 'required|max:255',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required|max:255',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'image' => 'nullable'
 
         ]);
@@ -81,7 +81,7 @@ class ProductController extends Controller
         $product = new Product;
         $product->category_id = $request->input('category_id');
         $product->name = $request->input('name');
-        $product->slug = Str::slug($request->input('slug'));
+        // $product->slug = Str::slug($request->input('slug'));
         $product->small_description = $request->input('small_description');
         $product->description = $request->input('description');
         $product->original_price = $request->input('original_price');
@@ -89,9 +89,9 @@ class ProductController extends Controller
         // $product->quantity = $request->input('quantity');
         $product->trending = $request->input('trending') == true ? '1' : '0';
         $product->status = $request->input('status') == true ? '1' : '0';
-        $product->meta_title = $request->input('meta_title');
-        $product->meta_keyword = $request->input('meta_keyword');
-        $product->meta_description = $request->input('meta_description');
+        // $product->meta_title = $request->input('meta_title');
+        // $product->meta_keyword = $request->input('meta_keyword');
+        // $product->meta_description = $request->input('meta_description');
         $product->save();
 
         if ($request->hasFile('image')) {
@@ -110,16 +110,16 @@ class ProductController extends Controller
             }
         }
 
-        if ($request->colors) {
-            foreach ($request->colors as $key => $color) {
-                $product->productColors()->create([
-                    'product_id' => $product->id,
-                    'color_id' => $color,
-                    'quantity' => $request->colorQuantity[$key] ?? 0,
+        // if ($request->colors) {
+        //     foreach ($request->colors as $key => $color) {
+        //         $product->productColors()->create([
+        //             'product_id' => $product->id,
+        //             'color_id' => $color,
+        //             'quantity' => $request->colorQuantity[$key] ?? 0,
 
-                ]);
-            }
-        }
+        //         ]);
+        //     }
+        // }
 
         return redirect()->route('admin.products.index')->with('message', 'Product Added Successfully.');
     }
@@ -132,6 +132,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        
         return view('admin.products.show', compact('product'));
     }
 
@@ -147,9 +148,9 @@ class ProductController extends Controller
         $categories = Category::latest()->paginate(5);
 
         $product = Product::findOrFail($id);
-        $product_color = $product->productColors()->pluck('color_id')->toArray();
-        $colors = Color::WhereNotIn('id', $product_color)->get();
-        return view('admin.products.edit', compact('product', 'categories', 'product', 'colors'));
+        // $product_color = $product->productColors()->pluck('color_id')->toArray();
+        // $colors = Color::WhereNotIn('id', $product_color)->get();
+        return view('admin.products.edit', compact('product', 'categories', 'product'));
     }
 
     /**
@@ -164,13 +165,13 @@ class ProductController extends Controller
         request()->validate([
             'category_id' => 'required|integer',
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
             // 'quantity' => 'required|integer',
-            'meta_title' => 'required|max:255',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required|max:255',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'image' => 'nullable'
 
         ]);
@@ -179,17 +180,17 @@ class ProductController extends Controller
         if ($product) {
             $product->category_id = $request->input('category_id');
             $product->name = $request->input('name');
-            $product->slug = Str::slug($request->input('slug'));
+            // $product->slug = Str::slug($request->input('slug'));
             $product->small_description = $request->input('small_description');
             $product->description = $request->input('description');
             $product->original_price = $request->input('original_price');
             $product->selling_price = $request->input('selling_price');
-            $product->quantity = $request->input('quantity');
+            // $product->quantity = $request->input('quantity');
             $product->trending = $request->input('trending') == true ? '1' : '0';
             $product->status = $request->input('status') == true ? '1' : '0';
-            $product->meta_title = $request->input('meta_title');
-            $product->meta_keyword = $request->input('meta_keyword');
-            $product->meta_description = $request->input('meta_description');
+            // $product->meta_title = $request->input('meta_title');
+            // $product->meta_keyword = $request->input('meta_keyword');
+            // $product->meta_description = $request->input('meta_description');
             $product->save();
 
             if ($request->hasFile('image')) {
@@ -263,26 +264,26 @@ class ProductController extends Controller
             ->with('success', 'Product deleted successfully');
     }
 
-    public function updateProdColorQty(Request $request)
-    {
+    // public function updateProdColorQty(Request $request)
+    // {
 
-        $idProduct = $request->product_id;
-        $idProductColor = $request->prod_color_id;
+    //     $idProduct = $request->product_id;
+    //     $idProductColor = $request->prod_color_id;
 
-        $productColorData = Product::findOrFail($idProduct)
-            ->productColors()->where('id',  $idProductColor)->first();
-        $productColorData->update([
-            'quantity' => $request->qty
-        ]);
-        return response()->json(['message' => 'Product Color Qty updated']);
-    }
+    //     $productColorData = Product::findOrFail($idProduct)
+    //         ->productColors()->where('id',  $idProductColor)->first();
+    //     $productColorData->update([
+    //         'quantity' => $request->qty
+    //     ]);
+    //     return response()->json(['message' => 'Product Color Qty updated']);
+    // }
 
-    public function deleteProdColorQty($prod_color_id)
-    {
+    // public function deleteProdColorQty($prod_color_id)
+    // {
 
 
-        $productColor = ProductColor::findOrFail($prod_color_id);
-        $productColor->delete();
-        return response()->json(['message' => 'Product Color deleted']);
-    }
+    //     $productColor = ProductColor::findOrFail($prod_color_id);
+    //     $productColor->delete();
+    //     return response()->json(['message' => 'Product Color deleted']);
+    // }
 }

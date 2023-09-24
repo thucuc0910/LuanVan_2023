@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-5">
                 <div class="pull-left">
-                    <h2 style="color: blue">Add New Category</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.coupons.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.coupons.index') }}"> Back</a>
+                    <h2 style="color: blue">Thêm mã giảm giá</h2>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                 @enderror
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </form>

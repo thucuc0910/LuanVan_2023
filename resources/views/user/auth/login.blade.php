@@ -72,7 +72,24 @@
                     </div>
                 </div>
             </div>
+
+            
         </form>
+
+        <div class="social-login justify-content-center row pt-20">
+            <a href="#" class="fab fa-facebook-f d-flex align-items-center justify-content-center mr-2"
+                style="background: #3b5998; text-decoration: none; position: relative; text-align: center; color: #fff; mmargin-bottom: 10px; width: 40px; height: 40px; border-radius: 50%; display: inline-block;">
+                <span class="icon-facebook "></span>
+            </a>
+            <a href="#" class="twitter">
+                <span class="fab fa-twitter d-flex align-items-center justify-content-center mr-2"
+                    style="background: #1da1f2; text-decoration: none; position: relative; text-align: center; color: #fff; mmargin-bottom: 10px; width: 40px; height: 40px; border-radius: 50%; display: inline-block;"></span>
+            </a>
+            <a href="{{ asset('/user/auth/google/redirect') }}" class="google">
+                <span class="fab fa-google d-flex align-items-center justify-content-center mr-2"
+                    style="background: #ea4335; text-decoration: none; position: relative; text-align: center; color: #fff; mmargin-bottom: 10px; width: 40px; height: 40px; border-radius: 50%; display: inline-block;"></span>
+            </a>
+        </div>
     </div>
 
 @endsection

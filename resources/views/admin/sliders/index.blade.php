@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Sliders Management</h4>
+                        <h4>QUẢN LÝ SLIDERS</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -16,7 +16,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Sliders Management
+                                Quản lý sliders
                             </li>
                         </ol>
                     </nav>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="pull-right">
                     @can('role-create')
-                        <a class="btn btn-primary" href="{{ route('admin.sliders.create') }}"> Create New Slider</a>
+                        <a class="btn btn-primary" href="{{ route('admin.sliders.create') }}"> Thêm slider mới</a>
                     @endcan
 
                 </div>
@@ -43,11 +43,11 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Title</th>
-                        <th>Description</th>
+                        <th>Tiêu đề</th>
+                        <th>Miêu tả</th>
                         <th>Image</th>
-                        <th>Status</th>
-                        <th width="280px">Action</th>
+                        <th>Tình trạng</th>
+                        <th width="280px">Tuỳ biến</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,8 @@
                             <td>{{ $slider->title }}</td>
                             <td>{{ $slider->description }}</td>
                             <td>
-                                <img src="{{ asset('/images/sliders/' . $slider->image) }}" style=" width: 200px; height: 100px">
+                                <img src="{{ asset('/images/sliders/' . $slider->image) }}"
+                                    style=" width: 200px; height: 100px">
 
                             </td>
                             <td>{{ $slider->status == 1 ? 'Hidden' : 'Visible' }}</td>

@@ -4,12 +4,14 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-5">
                 <div class="pull-left">
-                    <h2>Add New Category</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.categories.index') }}"> Trở lại</a>
+
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.categories.index') }}"> Back</a>
+                    <h2>THÊM LOẠI SẢN PHẨM</h2>
+
                 </div>
             </div>
         </div>
@@ -30,7 +32,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name</strong>
+                        <strong>Tên</strong>
                         <input type="text" name="name" class="form-control">
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Slug</strong>
                         <input type="text" name="slug" class="form-control">
@@ -46,11 +48,11 @@
                 </div>
                 @error('slug')
                     <span class="text-danger">{{ $message }}</span>
-                @enderror
+                @enderror --}}
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Description</strong>
+                        <strong>Miêu tả</strong>
                         <textarea class="form-control" style="height:150px" name="description" rows="3"></textarea>
                     </div>
                 </div>
@@ -60,7 +62,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Image</strong>
+                        <strong>Hình ảnh</strong>
                         <input type="file" name="image" class="form-control">
                     </div>
                 </div>
@@ -71,17 +73,21 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Status</strong><br />
-                        <input type="checkbox" name="status" style="width: 30px; height: 30px">
+                        <strong>Tình trạng</strong><br />
+                        <div class="row pl-5 pt-2">
+                            <input type="radio" name="status" style="width: 20px; height: 20px"> 
+                            <p class="pl-1"> Hoạt động</p>
+
+                        </div>
                     </div>
                 </div>
                 @error('status')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Title</strong>
+                        <strong>Tiêu đề meta</strong>
                         <textarea type="text" name="meta_title" class="form-control"></textarea>
                     </div>
                 </div>
@@ -91,7 +97,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Keyword</strong>
+                        <strong>Từ khoá meta</strong>
                         <textarea type="text" name="meta_keyword" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
@@ -101,16 +107,16 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Meta Description</strong>
+                        <strong>Mô tả meta</strong>
                         <textarea type="text" name="meta_description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 @error('meta_description')
                     <span class="text-danger">{{ $message }}</span>
-                @enderror
+                @enderror --}}
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </form>

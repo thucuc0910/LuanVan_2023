@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="title">
-                        <h4>Providers Management</h4>
+                        <h4>Quản lý nhà cung cấp</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
@@ -16,7 +16,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Providers Management
+                                Quản lý nhà cung cấp
                             </li>
                         </ol>
                     </nav>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="pull-right">
                     @can('role-create')
-                        <a class="btn btn-primary" href="{{ route('admin.providers.create') }}"> Create New Coupon</a>
+                        <a class="btn btn-primary" href="{{ route('admin.providers.create') }}"> Thêm nhà cung cấp</a>
                     @endcan
 
                 </div>
@@ -47,9 +47,9 @@
                         <th>Tên </th>
                         <th>Phone </th>
                         <th>Email</th>
-                        <th>Địa chỉ</th>
-                        <th>Status</th>
-                        <th width="280px">Action</th>
+                        {{-- <th>Địa chỉ</th> --}}
+                        <th>Tình trạng</th>
+                        <th width="280px">Tuỳ biến</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,25 +69,6 @@
                                 {{ $provider->provider_email }}
                             </td>
                             <td class="center">
-                                {{ $provider->provider_street }}
-                                @foreach ($wards as $ward)
-                                    @if ($ward->xaid == $provider->provider_ward)
-                                        ,{{ $ward->name }}
-                                    @endif
-                                @endforeach
-                                @foreach ($districts as $district)
-                                    @if ($district->maqh == $provider->provider_district)
-                                        ,{{ $district->name }}
-                                    @endif
-                                @endforeach
-                                @foreach ($cities as $ci)
-                                    @if ($ci->matp == $provider->provider_city)
-                                        ,{{ $ci->name }}
-                                    @endif
-                                @endforeach
-
-                            </td>
-                            <td class="center">
                                 @if ($provider->status == 1)
                                     Active
                                 @else
@@ -95,9 +76,8 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-success"
-                                    href="{{ route('admin.providers.show', $provider->id) }}">Show</a>
-
+                                {{-- <a class="btn btn-success"
+                                    href="{{ route('admin.providers.show', $provider->id) }}">Show</a> --}}
                                 <a class="btn btn-warning"
                                     href="{{ route('admin.providers.edit', $provider->id) }}">Edit</a>
                                 {!! Form::open([

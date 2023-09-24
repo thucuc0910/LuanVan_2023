@@ -7,24 +7,26 @@ use Livewire\Component;
 
 class ProductIndex extends Component
 {
-    public $sliders, $products, $category, $categories, $priceInputs;
+    public $sliders, $products, $category, $categories, $priceInputs, $priceRange = '';
     protected $queryString = [
         'priceInputs' => ['expect' => '', 'as' => 'price'],
     ];
 
     public function mount($sliders, $products, $category, $categories)
     {
-
         $this->sliders     = $sliders;
         $this->products    = $products;
         $this->category    = $category;
         $this->categories  = $categories;
     }
+
+    public function priceRange(){
+        dd($this->priceRange) ;
+    }
     public function render()
     {
-        // if(){
+        
 
-        // }
         $this->products = Product::where('category_id', $this->category->id)
             ->when($this->priceInputs, function ($q) {
                 $q->when($this->priceInputs == 'high-to-low', function ($q2) {
@@ -40,6 +42,7 @@ class ProductIndex extends Component
             'products  ' => $this->products,
             'category  ' => $this->category,
             'categories' => $this->categories,
+            'priceRange' => $this->priceRange,
         ]);
     }
 }

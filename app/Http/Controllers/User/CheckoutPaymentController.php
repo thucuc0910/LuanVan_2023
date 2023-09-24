@@ -9,15 +9,14 @@ use Illuminate\Support\Carbon;
 
 class CheckoutPaymentController extends Controller
 {
-    public function check(){
-
+    public function check()
+    {
     }
 
-    
+
 
     public function online_checkout(Request $request)
     {
-        // dd($request->all());
         if (isset($_POST['cod'])) {
             dd('345t45r');
         } elseif (isset($_POST['redirect'])) {
@@ -25,7 +24,16 @@ class CheckoutPaymentController extends Controller
             // dd($data);
             $code_cart = rand(00, 9999);
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://127.0.0.1:8000/user/thank-you";
+
+            $email = isset($data['email']) ? $data['email'] : '';
+            // Tạo một mảng chứa các thông tin từ biến $data và thông tin "dc_DiaChi"
+            $queryData = array_merge($data, ['email' => $email]);
+            // Chuyển đổi mảng thông tin thành query string
+            $queryString = http_build_query($queryData);
+            // Cập nhật biến $vnp_Returnurl bằng cách thêm query string vào URL
+            // $vnp_Returnurl = "http://127.0.0.1:8000/vnpay-callback?" ;
+
+            $vnp_Returnurl = "http://127.0.0.1:8000/user/thank-you?" . $queryString;
             $vnp_TmnCode = "9QYP0W65"; //Mã website tại VNPAY 
             $vnp_HashSecret = "ZZTRZDLTLOGCNIZGETJGYNKZPCDHASVM"; //Chuỗi bí mật
 
@@ -39,11 +47,11 @@ class CheckoutPaymentController extends Controller
             //Add Params of 2.0.1 Version
             // $vnp_ExpireDate = $_POST['txtexpire'];
             //Billing
-            $vnp_Bill_Mobile    = $data['phone'];
-            $vnp_Bill_Email     = $data['email'];
-            $fullName           = $data['fullname'];
-            $vnp_Inv_Address    = $data['address'];
-            $vnp_Inv_Type       = $data['pincode'];
+            // $vnp_Bill_Mobile    = $data['phone'];
+            // $vnp_Bill_Email     = $data['email'];
+            // $fullName           = $data['fullname'];
+            // $vnp_Inv_Address    = $data['address'];
+            // $vnp_Inv_Type       = $data['pincode'];
 
             //Billing
             // $vnp_Bill_Mobile = $_POST['phone'];
@@ -84,7 +92,7 @@ class CheckoutPaymentController extends Controller
             //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
             // }
 
-            
+
 
             //var_dump($inputData);
             ksort($inputData);
@@ -103,11 +111,11 @@ class CheckoutPaymentController extends Controller
             $vnp_Url = $vnp_Url . "?" . $query;
             if (isset($vnp_HashSecret)) {
                 $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
-                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash ;
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
             }
             $returnData = array(
-                'code' => '00', 
-                'message' => 'success', 
+                'code' => '00',
+                'message' => 'success',
                 'data' => $vnp_Url,
             );
 
