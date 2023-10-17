@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-3">
                 <div class="pull-left">
-                    <h2>Add New Product</h2>
+                    <a class="btn btn-sm btn-primary m-2" href="{{ route('admin.products.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary m-2" href="{{ route('admin.products.index') }}"> Back</a>
+                    <h2>CẬP NHẬT SẢN PHẨM</h2>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
             @csrf
             @method('PATCH')
 
-            <div class="tab-header border">
+            <div class="tab-header ">
                 <ul class="nav nav-tabs customtab" id="myTab" role="tablist">
                     {{-- tab 1 --}}
                     <li class="nav-item p-3" role="presentation">
@@ -41,14 +41,14 @@
                         </a>
                     </li>
                     {{-- tab 2 --}}
-                    <li class="nav-item p-3" role="presentation">
+                    {{-- <li class="nav-item p-3" role="presentation">
                         <a class="nav-link" id="seoteg-tab" data-bs-toggle="tab" data-bs-target="#seoteg-tab-pane"
                             type="button" role="tab" aria-controls="seoteg-tab-pane" aria-selected="false">
                             <strong>
                                 SEO Tags
                             </strong>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- tab 3 --}}
                     <li class="nav-item p-3" role="presentation">
                         <a class="nav-link" id="details-tab" data-bs-toggle="tab"
@@ -84,11 +84,11 @@
 
             <div class="tab-content" id="myTabContent">
                 {{-- tab 1 --}}
-                <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
-                    aria-labelledby="home-tab" tabindex="0">
+                <div class="tab-pane fade p-3 show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                    tabindex="0">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Selecct Category</strong>
+                            <strong>Loại sản phẩm</strong>
                             {{-- {!! Form::select(' categories[]', $categories, [], ['class' => 'form-control', 'multiple']) !!} --}}
 
                             <select name="category_id" id="" class="form-control">
@@ -109,12 +109,12 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-sm-12 col-md-12">
+                    {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <strong>Slug</strong>
                             <input type="text" name="slug" value="{{ $product->slug }}" class="form-control">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -131,7 +131,7 @@
                     </div>
                 </div>
                 {{-- tab 2 --}}
-                <div class="tab-pane fade border p-3" id="seoteg-tab-pane" role="tabpanel" aria-labelledby="seoteg-tab"
+                {{-- <div class="tab-pane fade border p-3" id="seoteg-tab-pane" role="tabpanel" aria-labelledby="seoteg-tab"
                     tabindex="0">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
@@ -156,10 +156,10 @@
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
                 {{-- tab 3 --}}
-                <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
-                    aria-labelledby="details-tab" tabindex="0">
+                <div class="tab-pane fade p-3" id="details-tab-pane" role="tabpanel" aria-labelledby="details-tab"
+                    tabindex="0">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6">
                             <div class="form-group">
@@ -188,20 +188,28 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <strong>Trending</strong><br />
-                                <input type="checkbox" name="trending"
-                                    {{ $product->trending == '1' ? 'checked=""' : '' }}
-                                    style="width: 30px; height: 30px;">
+                                <div class="row pl-5 pt-2">
+                                    <input type="radio" name="trending"
+                                        {{ $product->trending == '1' ? 'checked=""' : '' }}
+                                        style="width: 20px; height: 20px;">
+                                    <p class="pl-1"> Hoạt động</p>
+                                </div>
+
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <strong>Status</strong><br />
-                                <input type="checkbox" name="status" {{ $product->status == '1' ? 'checked=""' : '' }}
-                                    style="width: 30px; height: 30px;">
+                                <div class="row pl-5 pt-2">
+                                    <input type="radio" name="status"
+                                        {{ $product->trending == '1' ? 'checked=""' : '' }}
+                                        style="width: 20px; height: 20px;">
+                                    <p class="pl-1"> Hoạt động</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -209,7 +217,7 @@
 
                 </div>
                 {{-- tab 4 --}}
-                <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab"
+                <div class="tab-pane fade p-3" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab"
                     tabindex="0">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-mb-12">
                         <strong for="">
@@ -219,9 +227,9 @@
 
                     </div>
                     <div class="p-3">
-                        @if ($product->product_images)
+                        @if ($product->productImages)
                             <div class="row p-3">
-                                @foreach ($product->product_images as $image)
+                                @foreach ($product->productImages as $image)
                                     <div class="col-md-2 row ">
                                         <img src="{{ asset($image->image) }}" style="width: 80px; height: 80px"
                                             class="me-4 border" alt="Img">

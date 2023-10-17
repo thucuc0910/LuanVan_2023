@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="title">
-                    <h4>Users Management</h4>
+                    <h4>QUẢN LÝ QUẢN TRỊ VIÊN</h4>
                 </div>
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                             <a href="{{ route('admin.home') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Users Management
+                            Quản lý quản trị viên
                         </li>
                     </ol>
                 </nav>
@@ -37,7 +37,7 @@
             </div>
             <div class="pull-right">
                 @can('role-create')
-                    <a class="btn btn-primary" href="{{ route('admin.users.create') }}"> Create New User</a>
+                    <a class="btn btn-primary" href="{{ route('admin.users.create') }}">Thêm quản trị viên</a>
 
                     {{-- <a href="#border-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse"
                         role="button"><i class="fa fa-code"></i>Create New User</a> --}}
@@ -49,10 +49,10 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Name</th>
+                    <th>Tên</th>
                     <th>Email</th>
-                    <th>Roles</th>
-                    <th width="280px">Action</th>
+                    <th>Quyền</th>
+                    <th width="280px">Tuỳ biến</th>
                 </tr>
             </thead>
             <tbody>

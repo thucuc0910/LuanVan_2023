@@ -65,13 +65,13 @@ class ProductController extends Controller
         request()->validate([
             'category_id' => 'required|integer',
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
             // 'quantity' => 'required|integer',
-            'meta_title' => 'required|max:255',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required|max:255',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'image' => 'nullable'
 
         ]);
@@ -81,7 +81,7 @@ class ProductController extends Controller
         $product = new Product;
         $product->category_id = $request->input('category_id');
         $product->name = $request->input('name');
-        $product->slug = Str::slug($request->input('slug'));
+        // $product->slug = Str::slug($request->input('slug'));
         $product->small_description = $request->input('small_description');
         $product->description = $request->input('description');
         $product->original_price = $request->input('original_price');
@@ -89,9 +89,9 @@ class ProductController extends Controller
         // $product->quantity = $request->input('quantity');
         $product->trending = $request->input('trending') == true ? '1' : '0';
         $product->status = $request->input('status') == true ? '1' : '0';
-        $product->meta_title = $request->input('meta_title');
-        $product->meta_keyword = $request->input('meta_keyword');
-        $product->meta_description = $request->input('meta_description');
+        // $product->meta_title = $request->input('meta_title');
+        // $product->meta_keyword = $request->input('meta_keyword');
+        // $product->meta_description = $request->input('meta_description');
         $product->save();
 
         if ($request->hasFile('image')) {
@@ -132,6 +132,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        
         return view('admin.products.show', compact('product'));
     }
 
@@ -164,13 +165,13 @@ class ProductController extends Controller
         request()->validate([
             'category_id' => 'required|integer',
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'small_description' => 'required',
             'description' => 'required',
             // 'quantity' => 'required|integer',
-            'meta_title' => 'required|max:255',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required|max:255',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'image' => 'nullable'
 
         ]);
@@ -179,7 +180,7 @@ class ProductController extends Controller
         if ($product) {
             $product->category_id = $request->input('category_id');
             $product->name = $request->input('name');
-            $product->slug = Str::slug($request->input('slug'));
+            // $product->slug = Str::slug($request->input('slug'));
             $product->small_description = $request->input('small_description');
             $product->description = $request->input('description');
             $product->original_price = $request->input('original_price');
@@ -187,9 +188,9 @@ class ProductController extends Controller
             // $product->quantity = $request->input('quantity');
             $product->trending = $request->input('trending') == true ? '1' : '0';
             $product->status = $request->input('status') == true ? '1' : '0';
-            $product->meta_title = $request->input('meta_title');
-            $product->meta_keyword = $request->input('meta_keyword');
-            $product->meta_description = $request->input('meta_description');
+            // $product->meta_title = $request->input('meta_title');
+            // $product->meta_keyword = $request->input('meta_keyword');
+            // $product->meta_description = $request->input('meta_description');
             $product->save();
 
             if ($request->hasFile('image')) {

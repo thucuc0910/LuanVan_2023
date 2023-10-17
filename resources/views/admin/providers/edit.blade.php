@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-3">
                 <div class="pull-left">
-                    <h2 style="color: blue">Add New Provider</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.providers.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.providers.index') }}"> Back</a>
+                    <h2 style="color: blue">CẬP NHẬT NHÀ CUNG CẤP</h2>
                 </div>
             </div>
         </div>

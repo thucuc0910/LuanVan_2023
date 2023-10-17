@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-    
+
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use constDefaults;
 use constGuards;
 use App\Models\Admin;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -48,7 +51,10 @@ class AdminController extends Controller
             'password' => $request->password
         );
 
+
+
         if (Auth::guard('admin')->attempt($creds)) {
+
             return redirect()->route('admin.home');
         } else {
             session()->flash('fail', 'Incorrect credentials');
@@ -200,20 +206,30 @@ class AdminController extends Controller
         return view('admin.BackEnd.page.admin.profile', compact('admin'));
     }
 
+    public function dashBoard(Request $request)
+    {
+        $products = Product::all();
+        $productCount = Order::count();
+        $userCount = User::count();
+        return view('admin.BackEnd.page.admin.dashboard', compact('products','productCount','userCount'));
+    }
+
+
+
     public function changeProfilePicture(Request $request)
     {
         $admin = Admin::findOrFail(auth('admin')->id());
         $path = 'images/users/admins/';
         $file = $request->file('adminProfilePictureFile');
         $old_picture = $admin->getAttributes()['picture'];
-        $file_path = $path.$old_picture;
-        $filename = 'ADMIN_IMG_'.rand(2, 1000).$admin->id.time().uniqid().'.jpg';
+        $file_path = $path . $old_picture;
+        $filename = 'ADMIN_IMG_' . rand(2, 1000) . $admin->id . time() . uniqid() . '.jpg';
 
         $upload = $file->move(public_path($path), $filename);
 
         if ($upload) {
-            if ($old_picture != null && File::exists((public_path($path.$old_picture)))) {
-                File::delete(public_path($path.$old_picture));
+            if ($old_picture != null && File::exists((public_path($path . $old_picture)))) {
+                File::delete(public_path($path . $old_picture));
             }
             $admin->update(['picture' => $filename]);
             return response()->json(['status' => 1, 'msg' => 'Your profile picture has been successfully updated.']);

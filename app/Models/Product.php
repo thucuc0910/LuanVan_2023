@@ -14,16 +14,16 @@ class Product extends Model
     protected $fillable = [
         'category_id',
         'name',
-        'slug',
+        // 'slug',
         'small_description',
         'description',
         'original_price',
         'selling_price',
         // 'quantity',
         'trending',
-        'meta_title',
-        'meta_keyword',
-        'meta_description',
+        // 'meta_title',
+        // 'meta_keyword',
+        // 'meta_description',
         'status',
 
     ];
@@ -38,5 +38,9 @@ class Product extends Model
     public function productSizes()
     {
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class, 'product_id','id');
     }
 }

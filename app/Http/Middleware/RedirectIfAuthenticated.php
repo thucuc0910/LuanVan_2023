@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-        // dd($guards);
+        // dd($request);
         // foreach ($guards as $guard) {
         //     if (Auth::guard($guard)->check()) {
         //         return redirect(RouteServiceProvider::HOME);
@@ -36,9 +36,13 @@ class RedirectIfAuthenticated
                 if($guard === 'user'){
                     return redirect()->route('user.home');
                 }
+                // if($guard === NULL){
+                //     return redirect()->route('user.login');
+                // }
             }
         }
         // dd($guard);
         return $next($request);
+        // return $next('user.login');
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->date('start_date');
             $table->date('end_date');
-            $table->tinyInteger('status')->default('0')->comment('1=hidden,0=visible');
+            $table->tinyInteger('status')->default('1')->comment('1=visible,9=hidden');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@
                                 <a href="{{ route('admin.home') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Nhà cung cấp
+                                Quản lý nhà cung cấp
                             </li>
                         </ol>
                     </nav>
@@ -48,8 +48,8 @@
                         <th>Phone </th>
                         <th>Email</th>
                         {{-- <th>Địa chỉ</th> --}}
-                        <th>Status</th>
-                        <th width="280px">Action</th>
+                        <th>Tình trạng</th>
+                        <th width="280px">Tuỳ biến</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,25 +68,6 @@
                             <td class="center">
                                 {{ $provider->provider_email }}
                             </td>
-                            {{-- <td class="center">
-                                {{ $provider->provider_street }}
-                                @foreach ($wards as $ward)
-                                    @if ($ward->xaid == $provider->provider_ward)
-                                        ,{{ $ward->name }}
-                                    @endif
-                                @endforeach
-                                @foreach ($districts as $district)
-                                    @if ($district->maqh == $provider->provider_district)
-                                        ,{{ $district->name }}
-                                    @endif
-                                @endforeach
-                                @foreach ($cities as $ci)
-                                    @if ($ci->matp == $provider->provider_city)
-                                        ,{{ $ci->name }}
-                                    @endif
-                                @endforeach
-
-                            </td> --}}
                             <td class="center">
                                 @if ($provider->status == 1)
                                     Active
@@ -95,9 +76,8 @@
                                 @endif
                             </td>
                             <td>
-                                <a class="btn btn-success"
-                                    href="{{ route('admin.providers.show', $provider->id) }}">Show</a>
-
+                                {{-- <a class="btn btn-success"
+                                    href="{{ route('admin.providers.show', $provider->id) }}">Show</a> --}}
                                 <a class="btn btn-warning"
                                     href="{{ route('admin.providers.edit', $provider->id) }}">Edit</a>
                                 {!! Form::open([

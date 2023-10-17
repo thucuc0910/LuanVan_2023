@@ -1,143 +1,204 @@
-<div class="main-navbar shadow-sm sticky-top">
-    <div class="top-navbar">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 my-auto">
-                    <ul class="nav justify-content-end">
+@section('style')
+    <style>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('user/cart') }}">
-                                <i class="fa fa-shopping-cart"></i> Cart (@livewire('cart-count'))
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('user/wishlist') }}">
-                                <i class="fa fa-heart"></i> Wishlist (@livewire('wish-list-count'))
-                            </a>
-                        </li>
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('user/login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+    </style>
+@endsection
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('user/register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> {{ Auth::user()->name }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i> My Orders</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My
-                                            Cart</a></li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                            <i class="fa fa-sign-out"></i>{{ __('Logout') }}
-                                        </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top "
+    style="display: block; padding: 1rem; font-size: 1.2rem">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
 
-                                        <form id="logout-form" action="{{ url('user/logout') }}" method="POST"
-                                            class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="15"
+                    alt="MDB Logo" loading="lazy" />
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black" href="{{ url('/user/home/') }}">Home</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    {{-- <button class="btn btn-white  border-white pt-3" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sản phẩm
+                    </button> --}}
+                    <a class="nav-link dropdown" href="#" id="navbarDropdown" role="button"
+                        data-mdb-toggle="dropdown" aria-expanded="false" style="color: black">
+                        Sản phẩm
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-white">
+                        @foreach ($categories as $category)
+                            <li>
+                                @if (Auth::check())
+                                    <a class="dropdown-item" style="color: black"
+                                        href="{{ url('/user/categoriesAuth/' . $category->slug) }}">
+                                        {{ $category->name }}
+                                    </a>
+                                @else
+                                    <a class="dropdown-item" style="color: black"
+                                        href="{{ url('/user/categories/' . $category->slug) }}">
+                                        {{ $category->name }}
+                                    </a>
+                                @endif
+
                             </li>
-                        @endguest
+                        @endforeach
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black" href="{{ url('/user/blog/') }}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: black" href="#">Giới thiệu</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        {{-- search --}}
+
+        <form action="{{ url('user/search') }}" method="GET" class="d-flex input-group w-auto">
+            <input type="search" name="search" value="" class="form-control rounded" placeholder="Search"
+                aria-label="Search" aria-describedby="search-addon" />
+            {{-- <button class="btn btn-white input-group-text border-0" type="submit" id="search-addon">
+                    <i class="fas fa-search"></i>
+                </button> --}}
+        </form>
+
+        @if (Auth::check())
+            <form id="search-form" action="{{ url('/user/searchProductMicrophoneAuth') }}" class="d-flex "
+                method="get">
+                <div class="btn btn-white input-group-text border-0" type="submit" id="">
+                    <div style="display:none">
+                        <input id="search-input" name="keywork" type="text">
+
+                    </div>
+                    <span class="microphone">
+                        <i class="fas fa-microphone"></i>
+                        <span class="recording-icon"></span>
+                    </span>
+                </div>
+            </form>
+        @else
+            <form id="search-form" action="{{ url('/user/searchProductMicrophone') }}" class="d-flex "
+                method="get">
+                <div class="btn btn-white input-group-text border-0" type="submit" id="">
+                    <div style="display:none">
+                        <input id="search-input" name="keywork" type="text">
+
+                    </div>
+                    <span class="microphone">
+                        <i class="fas fa-microphone"></i>
+                        <span class="recording-icon"></span>
+                    </span>
+                </div>
+            </form>
+        @endif
+
+
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            <!-- Icon -->
+            {{-- Cart --}}
+            <li class="nav-item" style="list-style-type: none">
+                <a class="nav-link me-3" href="{{ url('user/cart') }}">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span style="font-size: 0.7rem"
+                        class="badge rounded-pill badge-notification bg-danger">@livewire('cart-count')</span>
+                </a>
+            </li>
+
+            <!-- Notifications -->
+            <div class="dropdown">
+                <a class=" nav-link me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                    role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bell"></i>
+                    <span style="font-size: 0.7rem" class="badge rounded-pill badge-notification bg-danger ">1</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item" href="#">Some news</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Another news</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Wishlist -->
+            <li class="nav-item" style="list-style-type: none">
+                <a class="nav-link me-3" href="{{ url('user/wishlist') }}">
+                    <i class="fa fa-heart"></i>
+                    <span style="font-size: 0.7rem"
+                        class="badge rounded-pill badge-notification bg-danger">@livewire('wish-list-count')</span>
+                </a>
+            </li>
+
+            @guest
+                @if (Route::has('login'))
+                    <li class="nav-item " style="list-style-type: none">
+                        <a class="nav-link" href="{{ url('user/login') }}">
+                            {{-- <i class="fas fa-user"></i>  --}}
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                @endif
+
+                @if (Route::has('register'))
+                    <li class="nav-item" style="list-style-type: none">
+                        <a class="nav-link" href="{{ url('/user/register') }}"></a>
+                    </li>
+                @endif
+            @else
+                <!-- Avatar -->
+                <div class="dropdown">
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                        id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+                            alt="Black and White Portrait of a Man" loading="lazy" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                        <li>
+                            <a class="dropdown-item" href="#">My profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Settings</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ url('user/logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                 </div>
-            </div>
+            @endguest
+
         </div>
+        <!-- Right elements -->
     </div>
-    <nav class="navbar navbar-expand-lg" style="box-shadow: 0px 0px 20px 0px grey">
-        <div class="container-fluid col-md-10">
-            <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block">
-                <h2 class="brand-name">MyShoes</h2>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse col-md-5" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 ml-5">
-                    <li class="nav-item">
-                        <a class="nav-link" style="color: black" href="{{ url('/user/home/') }}">Home</a>
-                    </li>
+    <!-- Container wrapper -->
+</nav>
 
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-white  border-white" style="font-weight: 600; font-size: 23px "
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Sản phẩm
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-white">
-                            @foreach ($categories as $category)
-                                <li>
-                                    @if (Auth::check())
-                                        <a class="dropdown-item"
-                                            href="{{ url('/user/categoriesAuth/' . $category->slug) }}">
-                                            {{ $category->name }}
-                                        </a>
-                                    @else
-                                        <a class="dropdown-item"
-                                            href="{{ url('/user/categories/' . $category->slug) }}">
-                                            {{ $category->name }}
-                                        </a>
-                                    @endif
 
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
-                </ul>
-                <div class="col-md-3 my-auto">
-                    <form role="search">
-                        <div class="input-group">
-                            <input type="search" placeholder="Search your product" class="form-control" />
-                            <button class="btn bg-white border" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    {{-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> --}}
-</div>
+@section('script')
+@endsection

@@ -54,11 +54,11 @@
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="mb-3 ">
                             <strong>Tình trạng</strong><br />
-                            <div class="pr-5">
-                                <input type="checkbox" name="status" {{ $size->status == '1' ? 'checked=""' : '' }}
-                                    style="width:30px; height:30px">
+                            <div class="row pl-5 pt-2">
+                                <input type="radio" name="status" {{ $size->status == '1' ? 'checked=""' : '' }}
+                                    style="width: 20px; height: 20px">
+                                <p class="pl-1"> Hoạt động</p>
                             </div>
-                            Checked=hidden, unchecked=Visible
                         </div>
                     </div>
                     @error('status')
@@ -66,7 +66,7 @@
                     @enderror
 
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
                     </div>
                 </div>
             </form>

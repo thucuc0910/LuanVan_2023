@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ware_house_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('size_id');
+            $table->integer('price_import');
             $table->integer('quantity');
             $table->timestamps();
         });

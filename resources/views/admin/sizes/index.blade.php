@@ -15,7 +15,7 @@
                             <a href="{{ route('admin.home') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Size
+                            Quản lý size
                         </li>
                     </ol>
                 </nav>

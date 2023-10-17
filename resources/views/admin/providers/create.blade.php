@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-3">
                 <div class="pull-left">
-                    <h2 style="color: blue">Add New Provider</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.providers.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.providers.index') }}"> Back</a>
+                    <h2 style="color: blue">THÊM NHÀ CUNG CẤP</h2>
                 </div>
             </div>
         </div>
@@ -92,24 +92,25 @@
 
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <strong>Địa chỉ cụ thể</strong>
+                        <label>Địa chỉ cụ thể</label>
                         <input type="text" name="provider_street" class="provider_street form-control">
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Status</strong><br />
-                        <input type="checkbox" name="status" style="width: 30px; height: 30px" class="status">
+                        <strong>Tuỳ trạng</strong><br />
+                        <div class="row pl-5 pt-2">
+                            <input type="radio" name="status" class="status" style="width: 20px; height: 20px"> 
+                            <p class="pl-1"> Hoạt động</p>
+                        </div>
                     </div>
                 </div>
                 @error('status')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                     <button type="button" name="add_provider" class="btn btn-primary add_provider">THÊM</button>
 
                 </div>

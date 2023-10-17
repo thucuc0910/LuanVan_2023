@@ -15,19 +15,19 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->string('slug');
+            // $table->string('slug');
             $table->mediumText('small_description')->nullable();
             $table->longText('description')->nullable();
 
             $table->integer('original_price')->nullable();
             $table->integer('selling_price')->nullable();
             // $table->integer('quantity');
-            $table->tinyInteger('trending')->default('0')->comment('1=trending,0=not-trending');
-            $table->tinyInteger('status')->default('0')->comment('0=visible,1=hidden');
+            $table->tinyInteger('trending')->default('1')->comment('1=trending,9=not-trending');
+            $table->tinyInteger('status')->default('1')->comment('1=visible,9=hidden');
 
-            $table->string('meta_title')->nullable();
-            $table->mediumText('meta_keyword')->nullable();
-            $table->mediumText('meta_description')->nullable();
+            // $table->string('meta_title')->nullable();
+            // $table->mediumText('meta_keyword')->nullable();
+            // $table->mediumText('meta_description')->nullable();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

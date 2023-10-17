@@ -9,6 +9,7 @@ use App\Models\ProductWareHouse;
 use App\Models\Provider;
 use App\Models\Size;
 use App\Models\WareHouse;
+use App\Models\WareHouseTemp;
 use Illuminate\Http\Request;
 
 class WareHouseController extends Controller
@@ -26,10 +27,12 @@ class WareHouseController extends Controller
         $products = Product::where('status', 1)->paginate(5);
         $sizes = Size::where('status', 1)->get();
         $providers = Provider::where('status', 1)->get();
+        $warehouseTemps = WareHouseTemp::where('user_id', auth()->user()->id)->get();
         return view('admin.warehouse.create', [
             'products' => $products,
             'sizes' => $sizes,
             'providers' => $providers,
+            'warehouseTemps' => $warehouseTemps,
         ]);
     }
 
@@ -43,62 +46,34 @@ class WareHouseController extends Controller
         $wareHouse->status = 0;
         $wareHouse->save();
 
-        foreach ($request->product_name as $key => $product_id) {
+        $wareHouseTemps = WareHouseTemp::where('user_id', auth()->user()->id)->get();
+
+        foreach ($wareHouseTemps as $key => $wareHouseTemp) {
             $wareProductHouse = new ProductWareHouse();
             $wareProductHouse->ware_house_id = $wareHouse->id;
-            $wareProductHouse->product_id = $request->product_name[$key];
-            $wareProductHouse->size_id = $request->product_size[$key];
-            $wareProductHouse->quantity = $request->product_quantity[$key] ?? 0;
+            $wareProductHouse->product_id = $wareHouseTemp->product_id;
+            $wareProductHouse->size_id = $wareHouseTemp->size_id;
+            $wareProductHouse->quantity = $wareHouseTemp->quantity;
+            $wareProductHouse->price_import = $wareHouseTemp->price_import;
             $wareProductHouse->save();
 
-            // $producSize = ProductSize::findOrFail($request->product_name[$key], $request->product_size[$key]);
-
-            $producSize = ProductSize::where('product_id',$request->product_name[$key])->where('size_id',$request->product_size[$key])->first();
+            $producSize = ProductSize::where('product_id', $wareHouseTemp->product_id)->where('size_id', $wareHouseTemp->size_id)->first();
             if ($producSize) {
-                $producSize->product_id = $request->product_name[$key];
-                $producSize->size_id = $request->product_size[$key];
-                $producSize->quantity = $producSize->quantity + $request->product_quantity[$key];
+                $producSize->product_id = $wareHouseTemp->product_id;
+                $producSize->size_id = $wareHouseTemp->size_id;
+                $producSize->quantity = $producSize->quantity + $wareHouseTemp->quantity;
                 $producSize->save();
             } else {
                 $size = new ProductSize();
-                $size->product_id = $request->product_name[$key];
-                $size->size_id = $request->product_size[$key];
-                $size->quantity = $request->product_quantity[$key];
+                $size->product_id = $wareHouseTemp->product_id;
+                $size->size_id = $wareHouseTemp->size_id;
+                $size->quantity = $wareHouseTemp->quantity;
                 $size->save();
             }
+            $wareHouseTemp->delete();
         }
 
-        // if ($request->hasFile('image')) {
-        //     $uploadPath = 'images/products/';
-        //     $i = 1;
-        //     foreach ($request->file('image') as $imageFile) {
-        //         $ext = $imageFile->getClientOriginalExtension();
-        //         $filename = time() . $i++ . '.' . $ext;
-        //         $imageFile->move($uploadPath, $filename);
-        //         $finalImagePathName = $uploadPath . $filename;
 
-        //         productImage::create([
-        //             'product_id' => $product->id,
-        //             'image' => $finalImagePathName,
-        //         ]);
-        //     }
-        // }
-
-        // if ($request->colors) {
-        //     foreach ($request->colors as $key => $color) {
-        //         $product->productColors()->create([
-        //             'product_id' => $product->id,
-        //             'color_id' => $color,
-        //             'quantity' => $request->colorQuantity[$key] ?? 0,
-
-        //         ]);
-        //     }
-        // }
-
-        return redirect()->route('admin.products.index')->with('message', 'Product Added Successfully.');
-    }
-
-    public function addRowProduct(Request $request){
-        dd($request);
+        return redirect()->route('admin.warehouses.index')->with('message', 'Phiếu nhập hàng được thêm thành công.');
     }
 }

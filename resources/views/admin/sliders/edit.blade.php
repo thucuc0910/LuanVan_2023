@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-5">
                 <div class="pull-left">
-                    <h2>Update New Slider</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.sliders.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.sliders.index') }}"> Back</a>
+                    <h2>CẬP NHẬT SLIDER</h2>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Title</strong>
+                        <strong>Tiêu đề</strong>
                         <input type="text" name="title" value="{{ $slider->title }}" class="form-control">
                     </div>
                 </div>
@@ -42,7 +42,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Description</strong>
+                        <strong>Miêu tả</strong>
                         <textarea class="form-control" style="height:150px" name="description" 
                         rows="3">{{ $slider->description }}</textarea>
                     </div>
@@ -66,8 +66,12 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-12 ">
                     <div class="form-group">
-                        <strong>Status</strong><br />
-                        <input type="checkbox" name="status" {{ $slider->status == '1' ? 'checked=""' : '' }} style="width: 30px; height: 30px">
+                        <strong>Tình trạng</strong><br />
+                        <div class="row pl-5 pt-2">
+                            <input type="radio" name="status" {{ $slider->status == '1' ? 'checked=""' : '' }}
+                                style="width: 20px; height: 20px">
+                            <p class="pl-1"> Hoạt động</p>
+                        </div>
                     </div>
                 </div>
                 @error('status')
@@ -76,7 +80,7 @@
 
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </div>
             </div>
         </form>

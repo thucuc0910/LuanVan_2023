@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="title">
-                    <h4>Role Management</h4>
+                    <h4>QUẢN LÝ QUYỀN</h4>
                 </div>
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                             <a href="{{ route('admin.home') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Role Management
+                            Quản lý quyền
                         </li>
                     </ol>
                 </nav>
@@ -38,7 +38,7 @@
             <div class="pull-right">
                 @can('role-create')
                     @can('role-create')
-                        <a class="btn btn-primary" href="{{ route('admin.roles.create') }}"> Create New Role</a>
+                        <a class="btn btn-primary" href="{{ route('admin.roles.create') }}"> Thêm quyền mới</a>
                     @endcan
                     {{-- <a href="#border-table" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse"
                         role="button"><i class="fa fa-code"></i>Create New Role</a> --}}
@@ -50,7 +50,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Name</th>
+                    <th>Tên</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>

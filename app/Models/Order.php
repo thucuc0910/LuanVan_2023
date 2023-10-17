@@ -19,16 +19,22 @@ class Order extends Model
         'fullname',
         'email',
         'phone',
-        'pincode',
+        // 'pincode',
+        'city',
+        'district',
+        'ward',
+        'detail',
+        'totalPrice',
+        'totalPriceDiscount',
+        'note',
         'address',
         'status_message',
         'payment_mode',
         'payment_id',
     ];
 
-    public function orderItems() : HasMany
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
-
 }

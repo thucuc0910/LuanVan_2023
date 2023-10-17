@@ -4,12 +4,14 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-5">
                 <div class="pull-left">
-                    <h2>Add New Category</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.categories.index') }}"> Trở lại</a>
+
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.categories.index') }}"> Back</a>
+                    <h2>THÊM LOẠI SẢN PHẨM</h2>
+
                 </div>
             </div>
         </div>
@@ -38,7 +40,7 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Slug</strong>
                         <input type="text" name="slug" class="form-control">
@@ -46,7 +48,7 @@
                 </div>
                 @error('slug')
                     <span class="text-danger">{{ $message }}</span>
-                @enderror
+                @enderror --}}
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
@@ -72,14 +74,18 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Tình trạng</strong><br />
-                        <input type="checkbox" name="status" style="width: 30px; height: 30px">
+                        <div class="row pl-5 pt-2">
+                            <input type="radio" name="status" style="width: 20px; height: 20px"> 
+                            <p class="pl-1"> Hoạt động</p>
+
+                        </div>
                     </div>
                 </div>
                 @error('status')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Tiêu đề meta</strong>
                         <textarea type="text" name="meta_title" class="form-control"></textarea>
@@ -107,10 +113,10 @@
                 </div>
                 @error('meta_description')
                     <span class="text-danger">{{ $message }}</span>
-                @enderror
+                @enderror --}}
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </form>

@@ -18,8 +18,14 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('email');
             $table->string('phone');
-            $table->string('pincode');
-            $table->mediumText('address');
+            // $table->string('pincode');
+            $table->integer('city');
+            $table->integer('district');
+            $table->integer('ward');
+            $table->string('detail');
+            $table->integer('totalPrice');
+            $table->integer('totalPriceDiscount');
+            $table->string('note')->nullable();
             $table->string('status_message');
             $table->string('payment_mode');
             $table->string('payment_id')->nullable();

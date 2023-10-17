@@ -56,12 +56,12 @@ class CategoryController extends Controller
     {
         request()->validate([
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'description' => 'required',
             'image' => 'required',
-            'meta_title' => 'required',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'status' => 'required',
 
         ]);
@@ -69,7 +69,7 @@ class CategoryController extends Controller
         $category = new Category;
 
         $category->name = $request->input('name');
-        $category->slug = $request->input('slug');
+        // $category->slug = $request->input('slug');
         $category->description = $request->input('description');
         
         if ($request->hasFile('image')) {
@@ -80,9 +80,9 @@ class CategoryController extends Controller
             $category->image = $filename;
         }
         $category->status = $request->input('status') == true ? '1' : '0';
-        $category->meta_title = $request->input('meta_title');
-        $category->meta_keyword = $request->input('meta_keyword');
-        $category->meta_description = $request->input('meta_description');
+        // $category->meta_title = $request->input('meta_title');
+        // $category->meta_keyword = $request->input('meta_keyword');
+        // $category->meta_description = $request->input('meta_description');
         $category->save();
 
         return redirect()->route('admin.categories.index')
@@ -122,12 +122,12 @@ class CategoryController extends Controller
     {
         request()->validate([
             'name' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'description' => 'required',
             'image' => 'required',
-            'meta_title' => 'required',
-            'meta_keyword' => 'required',
-            'meta_description' => 'required',
+            // 'meta_title' => 'required',
+            // 'meta_keyword' => 'required',
+            // 'meta_description' => 'required',
             'status' => 'required',
 
         ]);
@@ -135,7 +135,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         $category->name = $request->input('name');
-        $category->slug = $request->input('slug');
+        // $category->slug = $request->input('slug');
         $category->description = $request->input('description');
         if ($request->hasFile('image')) {
             $path = 'images/category/' . $category->image;
@@ -149,9 +149,9 @@ class CategoryController extends Controller
             $category->image = $filename;
         }
         $category->status = $request->input('status') == true ? '1' : '0';
-        $category->meta_title = $request->input('meta_title');
-        $category->meta_keyword = $request->input('meta_keyword');
-        $category->meta_description = $request->input('meta_description');
+        // $category->meta_title = $request->input('meta_title');
+        // $category->meta_keyword = $request->input('meta_keyword');
+        // $category->meta_description = $request->input('meta_description');
         $category->update();
 
         return redirect()->route('admin.categories.index')

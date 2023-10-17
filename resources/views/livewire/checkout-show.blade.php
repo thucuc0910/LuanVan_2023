@@ -8,14 +8,35 @@
                 <div class="row">
                     <div class="col-md-12 mb-4">
                         <div class="shadow bg-white p-3">
-                            <h4 class="text-primary">
-                                Tổng tiền:
-                                <span class="float-end">{{ number_format($this->totalProductAmount) }} VNĐ</span>
-                            </h4>
+                            <div class=" row">
+                                <div class="col-md-8">
+                                    <strong>
+                                        Tổng tiền:
+                                    </strong>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="float-end">{{ number_format($totalPriceDiscount) }} VNĐ</span>
+                                    <br>
+                                    <span class="float-end" style="color: red">- {{ number_format($couponDiscount) }}
+                                        VNĐ</span>
+                                </div>
+                            </div>
                             <hr>
-                            <small>* Items will be delivered in 3 - 5 days.</small>
-                            <br />
-                            <small>* Tax and other charges are included ?</small>
+                            <div class="row">
+                                {{-- style="border-radius: 0px 0px 50px 5px;" --}}
+                                <div class="col-md-12">
+                                    @if ($couponDiscount > 0)
+                                        <strong class="float-end">{{ number_format($totalPrice) }} VNĐ</strong>
+                                    @else
+                                        <strong class="float-end">{{ number_format($totalPriceDiscount) }} VNĐ</strong>
+                                    @endif
+                                </div>
+                            </div>
+                            {{-- <small>* Tax and other charges are included ?</small> --}}
+                        </div>
+                        <div class="col-md-12 shadow bg-secondary p-2">
+                            <small style="color: white">*Đơn hàng sẽ được giao đến bạn trong 3 đến 5 ngày.</small>
+
                         </div>
                     </div>
                     <form action="{{ url('/user/online_checkout') }}" method="POST">
@@ -23,13 +44,13 @@
                         <div class="col-md-12">
                             <div class="shadow bg-white p-3">
                                 <h4 class="text-primary">
-                                    Basic Information
+                                    Thông tin đặt hàng
                                 </h4>
                                 <hr>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label>Full Name</label>
+                                        <strong>Tên</strong>
                                         <input type="text" wire:model.defer="fullname" id="fullname" name="fullname"
                                             class="form-control" placeholder="Enter Full Name" />
                                         @error('fullname')
@@ -39,7 +60,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label>Phone Number</label>
+                                        <strong>Số điện thoại</strong>
                                         <input type="number" wire:model.defer="phone" id="phone" name="phone"
                                             class="form-control" placeholder="Enter Phone Number" />
                                         @error('phone')
@@ -49,9 +70,10 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label>Email Address</label>
+                                        <strong>Email</strong>
                                         <input type="email" wire:model.defer="email" id="email" name="email"
-                                            class="form-control" placeholder="Enter Email Address" />
+                                            class="form-control" placeholder="Vui lòng nhập email của bạn"
+                                            value="" />
                                         @error('email')
                                             <small class="text-danger">
                                                 {{ $message }}
@@ -59,24 +81,107 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label>Pin-code (Zip-code)</label>
-                                        <input type="number" wire:model.defer="pincode" id="pincode" name="pincode"
-                                            class="form-control" placeholder="Enter Pin-code" />
+                                        <strong>Ghi chú</strong>
+                                        <textarea rows="1" type="text" wire:model.defer="note" id="note" name="note" class="form-control"
+                                            placeholder="Vui lòng nhập email của bạn" value=""></textarea>
+                                        @error('email')
+                                            <small class="text-danger">
+                                                {{ $message }}
+                                            </small>
+                                        @enderror
+                                    </div>
+                                    {{-- <div class="col-md-6 mb-3">
+                                        <label></label>
+                                        <input type="number" wire:model.defer="" id="" name=""
+                                            class="form-control" placeholder="" />
                                         @error('pincode')
                                             <small class="text-danger">
                                                 {{ $message }}
                                             </small>
                                         @enderror
+                                    </div> --}}
+                                    @if ($address)
+                                        <div class="col-sm-6 mb-3">
+                                            <div class="form-group">
+                                                <strong>Tỉnh</strong>
+                                                <select wire:model.defer="user_city" class="form-control user_city choose" disabled name="user_city"
+                                                    id="city">
+                                                    <option value="">------------------------------------Chọn
+                                                        tỉnhthànhphố--------------------------------------------------------
+                                                    </option>
+                                                    @foreach ($cities as $ci)
+                                                        <option value="{{ $ci->matp }}"
+                                                            {{ $ci->matp == $address->city ? 'selected' : '' }}>
+                                                            {{ $ci->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 mb-3">
+                                            <div class="form-group">
+                                                <strong>Quận/Huyện</strong>
+                                                <select class="form-control user_district choose" disabled
+                                                    name="user_district" id="district">
+                                                    <option value="">
+                                                        ------------------------------------Chọn
+                                                        Quận/Huyện----------------------------------------------------------
+                                                    </option>
+                                                    @foreach ($districts as $district)
+                                                        <option value="{{ $district->maqh }}"
+                                                            {{ $district->maqh == $address->district ? 'selected' : '' }}>
+                                                            {{ $district->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 mb-3">
+                                            <div class="form-group">
+                                                <strong>Xã/Phường</strong>
+                                                <select class="form-control user_ward" disabled name="user_ward"
+                                                    id="ward">
+                                                    <option value="">
+                                                        ------------------------------------Chọn
+                                                        Xã/Phường--------------------------------------------------------
+                                                    </option>
+                                                    @foreach ($wards as $ward)
+                                                        <option value="{{ $ward->xaid }}"
+                                                            {{ $ward->xaid == $address->ward ? 'selected' : '' }}>
+                                                            {{ $ward->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        @php
+                                            $detail = $address->detail;
+                                        @endphp
+
+                                        <div class="col-xs-12 col-sm-6 col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <strong>Địa chỉ cụ thể</strong>
+                                                <input value="{{ $detail }}" id="user_street" disabled
+                                                    name="user_street" type="text" class="user_street form-control">
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
+
+
+
+                                    <div style="display:none">
+                                        <input id="search-input" wire:model.defer="couponDiscount" type="text"
+                                            value="{{ $couponDiscount }}">
+                                        <input id="search-input" wire:model.defer="totalPrice" type="text"
+                                            value="{{ $totalPriceDiscount }}">
+                                        <input id="search-input" wire:model.defer="totalPriceDiscount" type="text"
+                                            value="{{ $totalPrice }}">
                                     </div>
-                                    <div class="col-md-12 mb-3">
-                                        <label>Full Address</label>
-                                        <textarea wire:model.defer="address" class="form-control" id="address" name="address" rows="2"></textarea>
-                                        @error('address')
-                                            <small class="text-danger">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
-                                    </div>
+
+
                                     <div class="col-md-12 mb-3">
                                         <label>Select Payment Mode: </label>
                                         <div class="d-md-flex align-items-start">
@@ -150,6 +255,15 @@
                                                     {{-- @csrf --}}
                                                     <input type="hidden" name="total_vnpay" class="float-end"
                                                         value="{{ $this->totalProductAmount }} ">
+                                                    <input id="search-input" name="couponDiscount"
+                                                        wire:model.defer="couponDiscount" type="hidden"
+                                                        value="{{ $couponDiscount }}">
+                                                    <input id="search-input" name="totalPrice"
+                                                        wire:model.defer="totalPrice" type="hidden"
+                                                        value="{{ $totalPriceDiscount }}">
+                                                    <input id="search-input" name="totalPriceDiscount"
+                                                        wire:model.defer="totalPriceDiscount" type="hidden"
+                                                        value="{{ $totalPrice }}">
 
                                                     <button type="submit" name="redirect"
                                                         wire:loading.attr="disabled" class="btn btn-warning">

@@ -4,12 +4,12 @@
 
     <div class="pd-20 card-box mb-30">
         <div class="row">
-            <div class="col-lg-12 margin-tb">
+            <div class="col-lg-12 margin-tb pb-5">
                 <div class="pull-left">
-                    <h2 style="color: blue">Update Category</h2>
+                    <a class="btn btn-sm btn-primary" href="{{ route('admin.coupons.index') }}">Trở lại</a>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('admin.coupons.index') }}"> Back</a>
+                    <h2 style="color: blue">CẬP NHẬT MÃ GIẢM GIÁ</h2>
                 </div>
             </div>
         </div>
@@ -62,7 +62,6 @@
                     <div class="form-group">
                         <strong>Loại giảm giá</strong>
                         <select name="coupon_type" class="custom-select col-12">
-                            <option selected="">Vui lòng chọn...</option>
                             <option value="1" {{ $coupon->coupon_type == 1 ? 'selected' : '' }}>Giảm theo tiền</option>
                             <option value="2" {{ $coupon->coupon_type == 2 ? 'selected' : '' }}>Giảm theo phần trăm</option>
                         </select>
@@ -80,7 +79,7 @@
                 @enderror
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </div>
             </div>
         </form>

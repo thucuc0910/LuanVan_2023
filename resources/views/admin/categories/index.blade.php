@@ -62,10 +62,10 @@
                                 @endif
                             </td>
                             <td>
-                                @can('category-list')
+                                {{-- @can('category-list')
                                     <a class="btn btn-success"
                                         href="{{ route('admin.categories.show', $category->id) }}">Show</a>
-                                @endcan
+                                @endcan --}}
 
                                 @can('category-edit')
                                     <a class="btn btn-warning" style="color: white"

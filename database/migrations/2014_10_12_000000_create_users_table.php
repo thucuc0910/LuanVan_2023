@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('email')->Unique()->nullable();
             $table->string('password')->nullable();
             $table->string('picture')->nullable();
-            $table->string('address')->nullable();
+            $table->integer('city')->nullable();
+            $table->integer('district')->nullable();
+            $table->integer('ward')->nullable();
+            $table->string('street')->nullable();
             $table->string('phone')->nullable();
             $table->string('email_verified_at')->nullable();
             $table->enum('status',['Pending','Active'])->default('Pending');
-            $table->string('payment_method')->nullable();
-            $table->string('email_method')->nullable();
+            // $table->string('payment_method')->nullable();
+            // $table->string('email_method')->nullable();
             $table->timestamps();
         });
     }

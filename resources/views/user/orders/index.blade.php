@@ -1,4 +1,4 @@
-@extends('user.layouts.app')
+@extends('user.layouts.app_layout')
 @section('title', 'Order Page')
 
 @section('content')
